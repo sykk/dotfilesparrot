@@ -43,6 +43,24 @@ Use `./install.sh --dry-run` to preview restored files before changing `$HOME`.
 Use `./install.sh --restart-plasma` to confirm and restart Plasma after the
 theme files are restored.
 
+Optional setup helpers:
+
+```sh
+./install.sh --install-apps
+./install.sh --install-aur-helper
+./install.sh --enable-flathub
+./install.sh --enable-sddm-autologin
+./install.sh --setup
+```
+
+`--install-apps` opens a terminal checklist for Discord, VLC, Spotify, Git,
+Opera, Code, Ghostty, Deskflow, Steam, and Lutris. App installation expects an
+Arch-like system with `pacman` and uses `paru` or `yay`.
+
+`--enable-sddm-autologin` writes `/etc/sddm.conf.d/10-autologin.conf` for the
+current user after confirmation. It defaults to `plasma.desktop`; override with
+`SDDM_AUTOLOGIN_SESSION=name.desktop` if needed.
+
 ## Restore
 
 From this directory:

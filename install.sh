@@ -7,6 +7,11 @@ branch="${DOTFILES_BRANCH:-}"
 pull_updates=1
 dry_run=0
 restart_plasma=0
+install_apps=0
+install_aur_helper=0
+enable_flathub=0
+enable_sddm_autologin=0
+run_setup=0
 
 usage() {
   cat <<'USAGE'
@@ -21,10 +26,19 @@ Options:
       --no-pull        Do not pull updates before restoring
       --dry-run        Show what would be restored without changing $HOME
       --restart-plasma Prompt to restart Plasma after restoring dotfiles
+      --install-apps   Select and install apps with a terminal checklist
+      --install-aur-helper
+                       Install an AUR helper when one is missing
+      --enable-flathub Enable the Flathub Flatpak remote
+      --enable-sddm-autologin
+                       Prompt to configure SDDM autologin for this user
+      --setup          Run app selection plus optional system setup prompts
   -h, --help           Show this help
 
 Examples:
   ./install.sh
+  ./install.sh --setup
+  ./install.sh --install-apps --enable-flathub
   DOTFILES_REPO_URL=https://github.com/USER/dotfiles.git bash install.sh
   bash install.sh --repo https://github.com/USER/dotfiles.git
 USAGE
@@ -68,6 +82,27 @@ while [[ $# -gt 0 ]]; do
       restart_plasma=1
       shift
       ;;
+    --install-apps)
+      install_apps=1
+      shift
+      ;;
+    --install-aur-helper)
+      install_aur_helper=1
+      shift
+      ;;
+    --enable-flathub)
+      enable_flathub=1
+      shift
+      ;;
+    --enable-sddm-autologin)
+      enable_sddm_autologin=1
+      shift
+      ;;
+    --setup)
+      run_setup=1
+      install_apps=1
+      shift
+      ;;
     -h|--help)
       usage
       exit 0
@@ -85,6 +120,19 @@ require_command() {
 require_command git
 require_command rsync
 
+APP_PACKAGES=(
+  "discord|Discord|discord|ON"
+  "vlc|VLC|vlc|ON"
+  "spotify|Spotify|spotify|ON"
+  "git|Git|git|ON"
+  "opera|Opera|opera|ON"
+  "code|Code|code|ON"
+  "ghostty|Ghostty|ghostty|ON"
+  "deskflow|Deskflow|deskflow|ON"
+  "steam|Steam|steam|ON"
+  "lutris|Lutris|lutris|ON"
+)
+
 confirm() {
   local prompt="$1"
   local reply
@@ -92,6 +140,147 @@ confirm() {
   [[ -t 0 ]] || return 1
   read -r -p "$prompt [y/N] " reply
   [[ "$reply" == [Yy] || "$reply" == [Yy][Ee][Ss] ]]
+}
+
+require_arch_like() {
+  command -v pacman >/dev/null 2>&1 || die "package installation currently supports Arch-like systems with pacman"
+}
+
+aur_helper() {
+  if command -v paru >/dev/null 2>&1; then
+    printf 'paru\n'
+  elif command -v yay >/dev/null 2>&1; then
+    printf 'yay\n'
+  fi
+}
+
+install_paru_helper() {
+  local helper
+  helper="$(aur_helper || true)"
+  if [[ -n "$helper" ]]; then
+    log "AUR helper already installed: $helper"
+    return 0
+  fi
+
+  require_arch_like
+  require_command sudo
+
+  if confirm "Install paru AUR helper now?"; then
+    log "Installing build dependencies"
+    sudo pacman -S --needed --noconfirm base-devel git
+    require_command makepkg
+
+    local build_dir
+    build_dir="$(mktemp -d)"
+    log "Building paru-bin from AUR"
+    git clone https://aur.archlinux.org/paru-bin.git "$build_dir/paru-bin"
+    (cd "$build_dir/paru-bin" && makepkg -si --noconfirm)
+  else
+    die "AUR helper is required for app installation"
+  fi
+}
+
+select_apps_with_gui() {
+  local choices=()
+  local item id name package default_state
+
+  require_command whiptail
+
+  for item in "${APP_PACKAGES[@]}"; do
+    IFS='|' read -r id name package default_state <<<"$item"
+    choices+=("$id" "$name ($package)" "$default_state")
+  done
+
+  whiptail --title "Application Selection" \
+    --checklist "Select apps to install with your AUR helper:" \
+    22 78 12 \
+    "${choices[@]}" \
+    3>&1 1>&2 2>&3
+}
+
+install_selected_apps() {
+  local selected helper packages=()
+  local item id name package default_state selected_id
+
+  [[ -t 0 ]] || die "--install-apps requires an interactive terminal"
+  require_arch_like
+
+  if ! helper="$(aur_helper)"; then
+    install_paru_helper
+    helper="$(aur_helper)"
+  fi
+  [[ -n "$helper" ]] || die "could not find paru or yay after AUR helper setup"
+
+  selected="$(select_apps_with_gui)" || {
+    log "Application installation cancelled"
+    return 0
+  }
+
+  for selected_id in $selected; do
+    selected_id="${selected_id%\"}"
+    selected_id="${selected_id#\"}"
+    for item in "${APP_PACKAGES[@]}"; do
+      IFS='|' read -r id name package default_state <<<"$item"
+      if [[ "$id" == "$selected_id" ]]; then
+        packages+=("$package")
+      fi
+    done
+  done
+
+  if [[ "${#packages[@]}" -eq 0 ]]; then
+    log "No apps selected"
+    return 0
+  fi
+
+  log "Installing selected apps with $helper: ${packages[*]}"
+  "$helper" -S --needed "${packages[@]}"
+}
+
+enable_flathub_remote() {
+  require_command flatpak
+
+  if flatpak remotes --columns=name | grep -qx flathub; then
+    log "Flathub is already enabled"
+    return 0
+  fi
+
+  log "Enabling Flathub"
+  flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+}
+
+configure_sddm_autologin() {
+  local user_name session_name config_path
+
+  require_command sudo
+
+  user_name="${SUDO_USER:-$USER}"
+  session_name="${SDDM_AUTOLOGIN_SESSION:-plasma.desktop}"
+  config_path="/etc/sddm.conf.d/10-autologin.conf"
+
+  [[ -t 0 ]] || die "--enable-sddm-autologin requires an interactive terminal"
+  confirm "Enable SDDM autologin for $user_name using session '$session_name'?" || {
+    log "Skipped SDDM autologin"
+    return 0
+  }
+
+  log "Writing $config_path"
+  sudo mkdir -p /etc/sddm.conf.d
+  printf '[Autologin]\nUser=%s\nSession=%s\n' "$user_name" "$session_name" |
+    sudo tee "$config_path" >/dev/null
+}
+
+run_optional_setup_prompts() {
+  if confirm "Install or verify paru AUR helper?"; then
+    install_paru_helper
+  fi
+
+  if confirm "Enable Flathub Flatpak remote?"; then
+    enable_flathub_remote
+  fi
+
+  if confirm "Configure SDDM autologin?"; then
+    configure_sddm_autologin
+  fi
 }
 
 restart_plasma_shell() {
@@ -162,6 +351,26 @@ fi
 
 log "Restoring dotfiles into $HOME"
 "$dotfiles_dir/restore.sh"
+
+if [[ "$run_setup" -eq 1 ]]; then
+  run_optional_setup_prompts
+fi
+
+if [[ "$install_aur_helper" -eq 1 ]]; then
+  install_paru_helper
+fi
+
+if [[ "$install_apps" -eq 1 ]]; then
+  install_selected_apps
+fi
+
+if [[ "$enable_flathub" -eq 1 ]]; then
+  enable_flathub_remote
+fi
+
+if [[ "$enable_sddm_autologin" -eq 1 ]]; then
+  configure_sddm_autologin
+fi
 
 if [[ "$restart_plasma" -eq 1 ]]; then
   if confirm "Restart Plasma shell now?"; then
