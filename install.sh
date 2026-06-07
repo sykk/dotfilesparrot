@@ -145,7 +145,9 @@ APP_PACKAGES=(
   "opera-gx|Opera GX|opera-gx|ON"
   "code|Code|code|ON"
   "ghostty|Ghostty|ghostty|ON"
+  "fastfetch|Fastfetch|fastfetch|ON"
   "conky|Conky|conky|ON"
+  "klassy|Klassy window decorations|klassy|ON"
   "deskflow|Deskflow|deskflow|ON"
   "steam|Steam|steam|ON"
   "lutris|Lutris|lutris|ON"
@@ -335,13 +337,13 @@ run_post_app_setup_prompts() {
   fi
 }
 
-apply_wallpaper() {
+stage_wallpaper() {
   local wallpaper="$HOME/.local/share/wallpapers/EvilHackerMorty.png"
   local fallback_wallpaper="$HOME/Downloads/content.png"
   local source_wallpaper="$HOME/EvilMortyTheme/wallpapers/EvilHackerMorty/contents/images/1920x1080.png"
 
   if [[ "${DOTFILES_SKIP_THEME_APPLY:-0}" -eq 1 ]]; then
-    log "Skipping wallpaper apply"
+    log "Skipping wallpaper staging"
     return 0
   fi
 
@@ -351,6 +353,15 @@ apply_wallpaper() {
     cp -f "$source_wallpaper" "$wallpaper"
   elif [[ ! -f "$wallpaper" && -f "$fallback_wallpaper" ]]; then
     cp -f "$fallback_wallpaper" "$wallpaper"
+  fi
+}
+
+apply_wallpaper_live() {
+  local wallpaper="$HOME/.local/share/wallpapers/EvilHackerMorty.png"
+
+  if [[ "${DOTFILES_SKIP_THEME_APPLY:-0}" -eq 1 ]]; then
+    log "Skipping live wallpaper apply"
+    return 0
   fi
 
   if [[ -f "$wallpaper" ]]; then
@@ -371,6 +382,7 @@ normalize_home_paths() {
     "$HOME/.config/plasma-org.kde.plasma.desktop-appletsrc"
     "$HOME/.config/conky/conky.conf"
     "$HOME/.config/autostart/conky.desktop"
+    "$HOME/.config/fastfetch/config.jsonc"
     "$HOME/.local/share/plasma/look-and-feel/Catppuccin.EvilMorty/contents/layouts/org.kde.plasma.desktop-layout.js"
   )
   local file
@@ -379,6 +391,26 @@ normalize_home_paths() {
     [[ -f "$file" ]] || continue
     sed -i "s#/home/brandon#$HOME#g" "$file"
   done
+}
+
+apply_window_decoration_config() {
+  local kwinrc="$HOME/.config/kwinrc"
+
+  [[ -f "$kwinrc" ]] || return 0
+
+  if command -v kwriteconfig6 >/dev/null 2>&1; then
+    kwriteconfig6 --file "$kwinrc" --group org.kde.kdecoration2 --key ButtonsOnLeft XIA
+    kwriteconfig6 --file "$kwinrc" --group org.kde.kdecoration2 --key ButtonsOnRight ""
+    kwriteconfig6 --file "$kwinrc" --group org.kde.kdecoration2 --key library org.kde.klassy
+    kwriteconfig6 --file "$kwinrc" --group org.kde.kdecoration2 --key theme Klassy
+  else
+    sed -i \
+      -e 's/^ButtonsOnLeft=.*/ButtonsOnLeft=XIA/' \
+      -e 's/^ButtonsOnRight=.*/ButtonsOnRight=/' \
+      -e 's/^library=.*/library=org.kde.klassy/' \
+      -e 's/^theme=.*/theme=Klassy/' \
+      "$kwinrc"
+  fi
 }
 
 write_wallpaper_config() {
@@ -439,6 +471,25 @@ start_plasma_shell() {
     systemctl --user start plasma-plasmashell.service
   else
     nohup plasmashell --replace >/dev/null 2>&1 &
+  fi
+}
+
+wait_for_plasma_shell() {
+  local attempt
+
+  for attempt in {1..50}; do
+    pgrep -x plasmashell >/dev/null 2>&1 && return 0
+    sleep 0.2
+  done
+
+  return 1
+}
+
+reconfigure_kwin() {
+  if command -v qdbus6 >/dev/null 2>&1; then
+    qdbus6 org.kde.KWin /KWin reconfigure >/dev/null 2>&1 || true
+  elif command -v dbus-send >/dev/null 2>&1; then
+    dbus-send --session --dest=org.kde.KWin /KWin org.kde.KWin.reconfigure >/dev/null 2>&1 || true
   fi
 }
 
@@ -552,8 +603,9 @@ stop_plasma_shell_for_restore
 "$dotfiles_dir/restore.sh"
 
 normalize_home_paths
-apply_wallpaper
+stage_wallpaper
 write_wallpaper_config
+apply_window_decoration_config
 
 if [[ "$restart_plasma" -eq 1 || "$prompt_restart_plasma" -eq 1 ]]; then
   if confirm "Start Plasma shell with restored theme now?"; then
@@ -562,11 +614,17 @@ if [[ "$restart_plasma" -eq 1 || "$prompt_restart_plasma" -eq 1 ]]; then
     else
       restart_plasma_shell
     fi
+    wait_for_plasma_shell || true
+    reconfigure_kwin
+    apply_wallpaper_live
   else
     log "Skipped Plasma start"
   fi
 elif [[ "$plasma_was_running" -eq 1 ]]; then
   start_plasma_shell
+  wait_for_plasma_shell || true
+  reconfigure_kwin
+  apply_wallpaper_live
 fi
 
 log "Install complete"

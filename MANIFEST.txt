@@ -2792,6 +2792,7 @@
 4797 home/.local/share/plasma/plasmoids/luisbocanegra.panel.colorizer/contents/icons/matrix_logo.svg
 4805 home/.local/share/icons/YAMIS/apps/scalable/repoman.svg
 481 home/.local/share/icons/YAMIS/status/scalable/twitch-indicator.svg
+484 home/.config/fastfetch/config.jsonc
 4810 home/.local/share/icons/YAMIS/apps/scalable/ubuntu.svg
 4815 home/.local/share/icons/YAMIS/apps/scalable/bitwig-studio.svg
 4836 home/.local/share/icons/YAMIS/apps/scalable/com.cassidyjames.butler.svg
@@ -3207,6 +3208,7 @@
 580 home/.local/share/icons/YAMIS/status/scalable/receiving-low-signal.svg
 580 home/.local/share/icons/YAMIS/status/scalable/transmitting-low-signal.svg
 581 home/.local/share/icons/YAMIS/status/scalable/security-high.svg
+581 home/.config/fastfetch/logos/morty.txt
 5813 home/.local/share/plasma/plasmoids/luisbocanegra.panel.colorizer/contents/ui/components/FormShape.qml
 582 home/.config/katerc
 58232 home/.local/share/icons/YAMIS/apps/scalable/devilutionx.svg
