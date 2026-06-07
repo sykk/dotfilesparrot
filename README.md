@@ -26,15 +26,16 @@ From a checked-out repo:
 ./install.sh
 ```
 
-For a fresh CachyOS install, run the guided one-command setup:
+On CachyOS, `./install.sh` runs the guided one-command setup:
 
 ```sh
 ./install.sh --setup
 ```
 
-That runs the optional system setup prompts, opens the app selector, restores
-dotfiles, applies the KDE theme and wallpaper, then asks whether to restart
-Plasma.
+That checks optional system setup, opens the app selector, restores dotfiles,
+applies the wallpaper, then asks whether to restart Plasma. Use
+`./install.sh --restore-only` to skip app/system setup and only restore the
+dotfiles.
 
 From a fresh machine, first download this script or clone the repo, then pass
 the Git remote once the repo is published:
@@ -61,13 +62,15 @@ Optional setup helpers:
 ./install.sh --enable-flathub
 ./install.sh --enable-sddm-autologin
 ./install.sh --setup
+./install.sh --restore-only
 ```
 
 `--install-apps` opens a terminal checklist for Discord, VLC, Spotify, Git,
 GitHub CLI, Opera, Code, Ghostty, Deskflow, Steam, and Lutris. App installation
 expects an Arch-like system with `pacman` and uses `paru` or `yay`. In
-`--setup`, app and system setup runs before dotfiles are restored so the KDE
-theme is applied last.
+`--setup`, app and system setup runs before dotfiles are restored. The restored
+Plasma config remains the source of truth; the script only reapplies the
+wallpaper afterward.
 
 `--enable-sddm-autologin` writes `/etc/sddm.conf.d/10-autologin.conf` for the
 current user after confirmation. It defaults to `plasma.desktop`; override with

@@ -13,6 +13,8 @@ enable_flathub=0
 enable_sddm_autologin=0
 run_setup=0
 prompt_restart_plasma=0
+restore_only=0
+explicit_action=0
 
 usage() {
   cat <<'USAGE'
@@ -34,11 +36,13 @@ Options:
       --enable-sddm-autologin
                        Prompt to configure SDDM autologin for this user
       --setup          Run app selection plus optional system setup prompts
+      --restore-only   Only restore dotfiles and apply wallpaper
   -h, --help           Show this help
 
 Examples:
   ./install.sh
   ./install.sh --setup
+  ./install.sh --restore-only
   ./install.sh --install-apps --enable-flathub
   DOTFILES_REPO_URL=https://github.com/USER/dotfiles.git bash install.sh
   bash install.sh --repo https://github.com/USER/dotfiles.git
@@ -81,28 +85,39 @@ while [[ $# -gt 0 ]]; do
       ;;
     --restart-plasma)
       restart_plasma=1
+      explicit_action=1
       shift
       ;;
     --install-apps)
       install_apps=1
+      explicit_action=1
       shift
       ;;
     --install-aur-helper)
       install_aur_helper=1
+      explicit_action=1
       shift
       ;;
     --enable-flathub)
       enable_flathub=1
+      explicit_action=1
       shift
       ;;
     --enable-sddm-autologin)
       enable_sddm_autologin=1
+      explicit_action=1
       shift
       ;;
     --setup)
       run_setup=1
       install_apps=1
       prompt_restart_plasma=1
+      explicit_action=1
+      shift
+      ;;
+    --restore-only)
+      restore_only=1
+      explicit_action=1
       shift
       ;;
     -h|--help)
@@ -239,6 +254,21 @@ install_selected_apps() {
   "$helper" -S --needed "${packages[@]}"
 }
 
+ensure_app_selector() {
+  if command -v whiptail >/dev/null 2>&1; then
+    return 0
+  fi
+
+  require_arch_like
+  require_command sudo
+
+  if confirm "Install whiptail for the app selection GUI?"; then
+    sudo pacman -S --needed --noconfirm libnewt
+  fi
+
+  require_command whiptail
+}
+
 enable_flathub_remote() {
   require_command flatpak
 
@@ -272,11 +302,13 @@ configure_sddm_autologin() {
     sudo tee "$config_path" >/dev/null
 }
 
-run_optional_setup_prompts() {
+run_pre_app_setup_prompts() {
   if confirm "Install or verify paru AUR helper?"; then
     install_paru_helper
   fi
+}
 
+run_post_app_setup_prompts() {
   if confirm "Enable Flathub Flatpak remote?"; then
     enable_flathub_remote
   fi
@@ -286,29 +318,13 @@ run_optional_setup_prompts() {
   fi
 }
 
-apply_kde_theme() {
-  local look_and_feel="Catppuccin.EvilMorty"
-  local color_scheme="EvilMorty"
+apply_wallpaper() {
   local wallpaper="$HOME/Downloads/content.png"
   local fallback_wallpaper="$HOME/EvilMortyTheme/wallpapers/EvilHackerMorty/contents/images/1920x1080.png"
 
   if [[ "${DOTFILES_SKIP_THEME_APPLY:-0}" -eq 1 ]]; then
-    log "Skipping KDE theme apply"
+    log "Skipping wallpaper apply"
     return 0
-  fi
-
-  log "Applying KDE theme"
-
-  if command -v plasma-apply-lookandfeel >/dev/null 2>&1; then
-    plasma-apply-lookandfeel -a "$look_and_feel" || log "Could not apply look and feel: $look_and_feel"
-  else
-    log "plasma-apply-lookandfeel not found; skipping look and feel apply"
-  fi
-
-  if command -v plasma-apply-colorscheme >/dev/null 2>&1; then
-    plasma-apply-colorscheme "$color_scheme" || log "Could not apply color scheme: $color_scheme"
-  else
-    log "plasma-apply-colorscheme not found; skipping color scheme apply"
   fi
 
   if [[ ! -f "$wallpaper" && -f "$fallback_wallpaper" ]]; then
@@ -317,6 +333,7 @@ apply_kde_theme() {
 
   if [[ -f "$wallpaper" ]]; then
     if command -v plasma-apply-wallpaperimage >/dev/null 2>&1; then
+      log "Applying wallpaper"
       plasma-apply-wallpaperimage "$wallpaper" || log "Could not apply wallpaper: $wallpaper"
     else
       log "plasma-apply-wallpaperimage not found; skipping wallpaper apply"
@@ -392,8 +409,22 @@ if [[ "$dry_run" -eq 1 ]]; then
   exit 0
 fi
 
+if [[ "$explicit_action" -eq 0 ]]; then
+  run_setup=1
+  install_apps=1
+  prompt_restart_plasma=1
+fi
+
+if [[ "$restore_only" -eq 1 ]]; then
+  run_setup=0
+  install_apps=0
+  install_aur_helper=0
+  enable_flathub=0
+  enable_sddm_autologin=0
+fi
+
 if [[ "$run_setup" -eq 1 ]]; then
-  run_optional_setup_prompts
+  run_pre_app_setup_prompts
 fi
 
 if [[ "$install_aur_helper" -eq 1 ]]; then
@@ -401,7 +432,12 @@ if [[ "$install_aur_helper" -eq 1 ]]; then
 fi
 
 if [[ "$install_apps" -eq 1 ]]; then
+  ensure_app_selector
   install_selected_apps
+fi
+
+if [[ "$run_setup" -eq 1 ]]; then
+  run_post_app_setup_prompts
 fi
 
 if [[ "$enable_flathub" -eq 1 ]]; then
@@ -415,7 +451,7 @@ fi
 log "Restoring dotfiles into $HOME"
 "$dotfiles_dir/restore.sh"
 
-apply_kde_theme
+apply_wallpaper
 
 if [[ "$restart_plasma" -eq 1 || "$prompt_restart_plasma" -eq 1 ]]; then
   if confirm "Restart Plasma shell now?"; then
