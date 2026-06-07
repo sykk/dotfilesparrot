@@ -337,9 +337,9 @@ run_post_app_setup_prompts() {
 }
 
 stage_wallpaper() {
-  local wallpaper="$HOME/.local/share/wallpapers/EvilHackerMorty.png"
-  local fallback_wallpaper="$HOME/Downloads/content.png"
-  local source_wallpaper="$HOME/EvilMortyTheme/wallpapers/EvilHackerMorty/contents/images/1920x1080.png"
+  local wallpaper="$HOME/.local/share/wallpapers/EvilMorty.png"
+  local fallback_wallpaper="$HOME/Downloads/EvilMorty.png"
+  local source_wallpaper="$HOME/EvilMortyTheme/wallpapers/EvilHackerMorty/contents/images/EvilMorty.png"
 
   if [[ "${DOTFILES_SKIP_THEME_APPLY:-0}" -eq 1 ]]; then
     log "Skipping wallpaper staging"
@@ -356,7 +356,7 @@ stage_wallpaper() {
 }
 
 apply_wallpaper_live() {
-  local wallpaper="$HOME/.local/share/wallpapers/EvilHackerMorty.png"
+  local wallpaper="$HOME/.local/share/wallpapers/EvilMorty.png"
 
   if [[ "${DOTFILES_SKIP_THEME_APPLY:-0}" -eq 1 ]]; then
     log "Skipping live wallpaper apply"
@@ -413,7 +413,7 @@ apply_window_decoration_config() {
 }
 
 write_wallpaper_config() {
-  local wallpaper="$HOME/.local/share/wallpapers/EvilHackerMorty.png"
+  local wallpaper="$HOME/.local/share/wallpapers/EvilMorty.png"
   local plasma_config="$HOME/.config/plasma-org.kde.plasma.desktop-appletsrc"
   local plasmarc="$HOME/.config/plasmarc"
 

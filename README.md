@@ -71,7 +71,7 @@ Opera GX, Code, Ghostty, Fastfetch, Conky, Deskflow, Steam, and Lutris.
 App installation expects an Arch-like system with `pacman` and uses `paru` or `yay`. In
 `--setup`, app and system setup runs before dotfiles are restored. The restored
 Plasma config remains the source of truth; the script only reapplies the
-wallpaper afterward by copying it to `~/.local/share/wallpapers/EvilHackerMorty.png`.
+wallpaper afterward by copying it to `~/.local/share/wallpapers/EvilMorty.png`.
 
 The bundled Global Theme package is also kept in sync with the restored setup:
 it uses YAMIS icons, Breeze window decorations, the EvilHackerMorty wallpaper
