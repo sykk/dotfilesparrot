@@ -145,6 +145,7 @@ APP_PACKAGES=(
   "opera-gx|Opera GX|opera-gx|ON"
   "code|Code|code|ON"
   "ghostty|Ghostty|ghostty|ON"
+  "conky|Conky|conky|ON"
   "deskflow|Deskflow|deskflow|ON"
   "steam|Steam|steam|ON"
   "lutris|Lutris|lutris|ON"
