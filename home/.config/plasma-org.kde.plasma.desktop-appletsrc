@@ -27,7 +27,7 @@ positions={"1920x1080":["1","17"]}
 sortMode=-1
 
 [Containments][497][Wallpaper][org.kde.image][General]
-Image=file:///home/brandon/Downloads/content.png
+Image=file:///home/brandon/.local/share/wallpapers/EvilHackerMorty.png
 SlidePaths=/home/brandon/.local/share/wallpapers/,/usr/share/wallpapers/
 
 [Containments][498]

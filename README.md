@@ -11,7 +11,7 @@ This directory backs up the current desktop setup using home-relative paths unde
 - EvilMorty theme source and exported Code profile
 - Active color/icon/cursor themes: `EvilMorty.colors`, `YAMIS`,
   `Apple-cursors`
-- Current wallpaper from `~/Downloads/content.png`
+- Bundled EvilHackerMorty wallpaper package
 - Panel Colorizer preset
 - Conky config and autostart entry
 - Kate config and external tools

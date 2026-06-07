@@ -17,6 +17,7 @@
 57 home/.config/conky/backups/conkyrc.20260606-114546
 57 home/.conkyrc
 83 home/.config/plasmanotifyrc
+87 home/.config/plasmarc
 93 home/.config/btop/btop.conf
 96 home/.config/kdedefaults/kdeglobals
 104 home/.icons/Apple-cursors/index.theme
@@ -27,7 +28,6 @@
 181 home/.local/share/plasma/plasmoids/org.kde.windowtitle.Fork/CHANGELOG.md
 182 home/.config/kate/externaltools/Insert%20UUID.ini
 182 home/.config/kate/externaltools/gitk.ini
-191 home/.config/plasmarc
 197 home/.local/share/plasma/desktoptheme/EvilMorty.Transparent/plasmarc
 197 home/EvilMortyTheme/desktoptheme/EvilMorty.Transparent/plasmarc
 200 home/.config/kate/externaltools/git-cola.ini
@@ -3990,6 +3990,7 @@
 5733 home/.local/share/icons/YAMIS/mimetypes/scalable-outlined/libreoffice-text.svg
 5741 home/.local/share/icons/YAMIS/apps/scalable/firefox.svg
 5746 home/.local/share/icons/YAMIS/apps/scalable/mkvtoolnix-gui.svg
+5763 home/EvilMortyTheme/plans.md
 5780 home/.local/share/icons/YAMIS/apps/scalable/display-im6.q16.svg
 5813 home/.local/share/plasma/plasmoids/luisbocanegra.panel.colorizer/contents/ui/components/FormShape.qml
 5866 home/.local/share/icons/YAMIS/devices/scalable/cpu.svg
@@ -4009,7 +4010,6 @@
 6090 home/.local/share/plasma/plasmoids/luisbocanegra.panel.colorizer/contents/ui/configAppearance.qml
 6124 home/.local/share/icons/YAMIS/preferences/scalable/preferences-virtualization-container.svg
 6125 home/.local/share/plasma/plasmoids/AndromedaLauncher/contents/code/tools.js
-6140 home/EvilMortyTheme/plans.md
 6152 home/.local/share/plasma/plasmoids/luisbocanegra.panel.colorizer/contents/ui/configHideWidgets.qml
 6186 home/.local/share/icons/YAMIS/apps/scalable/kvirc.svg
 6201 home/.local/share/icons/YAMIS/emblems/scalable/emblem-web.svg
@@ -4418,7 +4418,7 @@
 59717 home/.local/share/plasma/plasmoids/luisbocanegra.panel.colorizer/translate/ru.po
 62027 home/.local/share/icons/YAMIS/apps/scalable/kpat.svg
 63252 home/.local/share/plasma/plasmoids/luisbocanegra.panel.colorizer/translate/nl.po
-71745 home/.config/plasma-org.kde.plasma.desktop-appletsrc
+71767 home/.config/plasma-org.kde.plasma.desktop-appletsrc
 83902 home/EvilMortyTheme/ascii.png
 106255 home/.local/share/plasma/look-and-feel/EvilMorty/contents/splash/images/Logo.png
 106255 home/EvilMortyTheme/EvilMorty/contents/splash/images/Logo.png
@@ -4431,9 +4431,9 @@
 834640 home/.icons/Apple-cursors/cursors/progress
 834640 home/.icons/Apple-cursors/cursors/wait
 1286936 home/EvilMortyTheme/newconky.png
+1313845 home/.local/share/wallpapers/EvilHackerMorty/contents/images/1920x1080.png
 1313845 home/Downloads/content.png
+1313845 home/EvilMortyTheme/wallpapers/EvilHackerMorty/contents/images/1920x1080.png
 2162907 home/EvilMortyTheme/current.png
 2335029 home/EvilMortyTheme/mockup.png
-2362627 home/.local/share/wallpapers/EvilHackerMorty/contents/images/1920x1080.png
-2362627 home/EvilMortyTheme/wallpapers/EvilHackerMorty/contents/images/1920x1080.png
 2604811 home/EvilMortyTheme/toppanel.png
