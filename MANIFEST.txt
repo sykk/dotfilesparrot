@@ -3572,7 +3572,7 @@
 7159 home/.local/share/icons/YAMIS/apps/scalable/atom.svg
 7170 home/.local/share/icons/YAMIS/apps/scalable/mumble.svg
 7176 home/.local/share/icons/YAMIS/apps/scalable/qrca.svg
-71778 home/.config/plasma-org.kde.plasma.desktop-appletsrc
+71745 home/.config/plasma-org.kde.plasma.desktop-appletsrc
 719 home/.local/share/icons/YAMIS/status/scalable/clickup-desktop-tray.svg
 719 home/.local/share/icons/YAMIS/status/scalable/state-warning.svg
 7200 home/.local/share/icons/YAMIS/apps/scalable/steam_icon_2325290.svg

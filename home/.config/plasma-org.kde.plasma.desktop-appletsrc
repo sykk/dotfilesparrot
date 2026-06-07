@@ -235,7 +235,7 @@ DialogWidth=810
 
 [Containments][518][Applets][526][Configuration][General]
 indicateAudioStreams=false
-launchers=applications:com.mitchellh.ghostty.desktop,applications:opera-gx.desktop,applications:discord.desktop,applications:org.kde.dolphin.desktop,applications:systemsettings.desktop,applications:proton-mail.desktop,applications:code-oss.desktop
+launchers=applications:com.mitchellh.ghostty.desktop,applications:opera-gx.desktop,applications:discord.desktop,applications:org.kde.dolphin.desktop,applications:systemsettings.desktop,applications:code-oss.desktop
 maxStripes=1
 
 [Containments][518][Applets][543]
