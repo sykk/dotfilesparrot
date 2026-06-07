@@ -65,8 +65,8 @@ Optional setup helpers:
 ./install.sh --restore-only
 ```
 
-`--install-apps` opens a terminal checklist for Discord, VLC, Spotify, Git,
-GitHub CLI, Opera, Code, Ghostty, Deskflow, Steam, and Lutris. App installation
+`--install-apps` opens a terminal checklist for Discord, Git, GitHub CLI,
+Opera GX, Code, Ghostty, Deskflow, Steam, and Lutris. App installation
 expects an Arch-like system with `pacman` and uses `paru` or `yay`. In
 `--setup`, app and system setup runs before dotfiles are restored. The restored
 Plasma config remains the source of truth; the script only reapplies the

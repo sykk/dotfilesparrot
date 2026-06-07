@@ -139,11 +139,9 @@ require_command rsync
 
 APP_PACKAGES=(
   "discord|Discord|discord|ON"
-  "vlc|VLC|vlc|ON"
-  "spotify|Spotify|spotify|ON"
   "git|Git|git|ON"
   "github-cli|GitHub CLI|github-cli|ON"
-  "opera|Opera|opera|ON"
+  "opera-gx|Opera GX|opera-gx|ON"
   "code|Code|code|ON"
   "ghostty|Ghostty|ghostty|ON"
   "deskflow|Deskflow|deskflow|ON"
