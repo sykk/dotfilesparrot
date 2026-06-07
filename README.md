@@ -40,6 +40,8 @@ DOTFILES_REPO_URL=https://github.com/USER/dotfiles.git bash install.sh
 ```
 
 Use `./install.sh --dry-run` to preview restored files before changing `$HOME`.
+Use `./install.sh --restart-plasma` to confirm and restart Plasma after the
+theme files are restored.
 
 ## Restore
 

@@ -6,6 +6,7 @@ install_dir="${DOTFILES_DIR:-$HOME/.dotfiles}"
 branch="${DOTFILES_BRANCH:-}"
 pull_updates=1
 dry_run=0
+restart_plasma=0
 
 usage() {
   cat <<'USAGE'
@@ -19,6 +20,7 @@ Options:
   -b, --branch NAME    Branch to clone or update
       --no-pull        Do not pull updates before restoring
       --dry-run        Show what would be restored without changing $HOME
+      --restart-plasma Prompt to restart Plasma after restoring dotfiles
   -h, --help           Show this help
 
 Examples:
@@ -62,6 +64,10 @@ while [[ $# -gt 0 ]]; do
       dry_run=1
       shift
       ;;
+    --restart-plasma)
+      restart_plasma=1
+      shift
+      ;;
     -h|--help)
       usage
       exit 0
@@ -78,6 +84,39 @@ require_command() {
 
 require_command git
 require_command rsync
+
+confirm() {
+  local prompt="$1"
+  local reply
+
+  [[ -t 0 ]] || return 1
+  read -r -p "$prompt [y/N] " reply
+  [[ "$reply" == [Yy] || "$reply" == [Yy][Ee][Ss] ]]
+}
+
+restart_plasma_shell() {
+  if ! pgrep -x plasmashell >/dev/null 2>&1; then
+    log "Plasma shell is not running; skipping restart"
+    return 0
+  fi
+
+  log "Restarting Plasma shell"
+  if command -v systemctl >/dev/null 2>&1 &&
+    systemctl --user list-unit-files --no-legend plasma-plasmashell.service 2>/dev/null | grep -q '^plasma-plasmashell\.service'; then
+    systemctl --user restart plasma-plasmashell.service
+    return 0
+  fi
+
+  if command -v kquitapp6 >/dev/null 2>&1; then
+    kquitapp6 plasmashell >/dev/null 2>&1 || true
+  elif command -v kquitapp5 >/dev/null 2>&1; then
+    kquitapp5 plasmashell >/dev/null 2>&1 || true
+  else
+    killall plasmashell >/dev/null 2>&1 || true
+  fi
+
+  nohup plasmashell --replace >/dev/null 2>&1 &
+}
 
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
@@ -124,5 +163,13 @@ fi
 log "Restoring dotfiles into $HOME"
 "$dotfiles_dir/restore.sh"
 
+if [[ "$restart_plasma" -eq 1 ]]; then
+  if confirm "Restart Plasma shell now?"; then
+    restart_plasma_shell
+  else
+    log "Skipped Plasma restart"
+  fi
+fi
+
 log "Install complete"
-log "Log out and back in, or restart Plasma, for KDE changes to fully reload."
+log "Use --restart-plasma, or log out and back in, for KDE changes to fully reload."
