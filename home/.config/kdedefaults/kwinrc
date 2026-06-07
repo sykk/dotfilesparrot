@@ -3,5 +3,7 @@ LayoutName=big_icons
 
 [org.kde.kdecoration2]
 NoPlugin=false
+ButtonsOnLeft=IAX
+ButtonsOnRight=
 library=org.kde.breeze
 theme=Breeze

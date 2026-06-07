@@ -398,14 +398,14 @@ apply_window_decoration_config() {
   [[ -f "$kwinrc" ]] || return 0
 
   if command -v kwriteconfig6 >/dev/null 2>&1; then
-    kwriteconfig6 --file "$kwinrc" --group org.kde.kdecoration2 --key ButtonsOnLeft ""
-    kwriteconfig6 --file "$kwinrc" --group org.kde.kdecoration2 --key ButtonsOnRight IAX
+    kwriteconfig6 --file "$kwinrc" --group org.kde.kdecoration2 --key ButtonsOnLeft IAX
+    kwriteconfig6 --file "$kwinrc" --group org.kde.kdecoration2 --key ButtonsOnRight ""
     kwriteconfig6 --file "$kwinrc" --group org.kde.kdecoration2 --key library org.kde.breeze
     kwriteconfig6 --file "$kwinrc" --group org.kde.kdecoration2 --key theme Breeze
   else
     sed -i \
-      -e 's/^ButtonsOnLeft=.*/ButtonsOnLeft=/' \
-      -e 's/^ButtonsOnRight=.*/ButtonsOnRight=IAX/' \
+      -e 's/^ButtonsOnLeft=.*/ButtonsOnLeft=IAX/' \
+      -e 's/^ButtonsOnRight=.*/ButtonsOnRight=/' \
       -e 's/^library=.*/library=org.kde.breeze/' \
       -e 's/^theme=.*/theme=Breeze/' \
       "$kwinrc"
