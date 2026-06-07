@@ -73,6 +73,10 @@ App installation expects an Arch-like system with `pacman` and uses `paru` or `y
 Plasma config remains the source of truth; the script only reapplies the
 wallpaper afterward by copying it to `~/.local/share/wallpapers/EvilHackerMorty.png`.
 
+The bundled Global Theme package is also kept in sync with the restored setup:
+it uses YAMIS icons, Klassy window decorations, the EvilHackerMorty wallpaper
+package, and the same dock launcher set as the saved Plasma config.
+
 `--enable-sddm-autologin` writes `/etc/sddm.conf.d/10-autologin.conf` for the
 current user after confirmation. It defaults to `plasma.desktop`; override with
 `SDDM_AUTOLOGIN_SESSION=name.desktop` if needed.

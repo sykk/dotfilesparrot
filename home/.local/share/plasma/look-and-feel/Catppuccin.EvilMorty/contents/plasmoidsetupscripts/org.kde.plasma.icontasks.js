@@ -8,22 +8,12 @@ function firstExisting(candidates) {
 }
 
 var launchers = [
-    firstExisting(["org.kde.konsole.desktop"]),
-    firstExisting(["org.kde.dolphin.desktop"]),
-    firstExisting([
-        "firefox.desktop",
-        "firefox_firefox.desktop",
-        "org.mozilla.firefox.desktop",
-        "opera-gx.desktop",
-        "com.opera.Opera.desktop",
-        "opera.desktop",
-        "com.google.Chrome.desktop",
-        "chrome.desktop"
-    ]),
-    firstExisting(["spotify.desktop", "com.spotify.Client.desktop"]),
+    firstExisting(["com.mitchellh.ghostty.desktop", "ghostty.desktop"]),
+    firstExisting(["opera-gx.desktop", "com.opera.Opera.desktop", "opera.desktop"]),
     firstExisting(["discord.desktop", "com.discordapp.Discord.desktop", "vesktop.desktop"]),
-    firstExisting(["steam.desktop", "com.valvesoftware.Steam.desktop"]),
-    firstExisting(["systemsettings.desktop", "org.kde.systemsettings.desktop"])
+    firstExisting(["org.kde.dolphin.desktop"]),
+    firstExisting(["systemsettings.desktop", "org.kde.systemsettings.desktop"]),
+    firstExisting(["code-oss.desktop", "code.desktop", "visual-studio-code.desktop"])
 ].filter(function(launcher) {
     return launcher !== ""
 })

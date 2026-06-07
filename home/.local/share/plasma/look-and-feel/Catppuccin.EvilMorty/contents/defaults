@@ -5,12 +5,12 @@ cursorTheme=Apple-cursors
 AccentColor=0,255,102
 ColorScheme=EvilMorty
 Name=EvilMorty
-TerminalApplication=konsole
+TerminalApplication=kitty
 accentActiveTitlebar=false
 accentColorFromWallpaper=false
 
 [kdeglobals][Icons]
-Theme=Tela-circle-green-dark
+Theme=YAMIS
 
 [kwinrc][DesktopSwitcher]
 LayoutName=org.kde.breeze.desktop

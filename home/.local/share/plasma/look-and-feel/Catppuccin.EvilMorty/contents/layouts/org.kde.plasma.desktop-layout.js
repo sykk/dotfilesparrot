@@ -226,7 +226,6 @@ panelColorizer.currentConfigGroup = ["General"]
 panelColorizer.writeConfig("hideWidget", "true")
 panelColorizer.writeConfig("isEnabled", "true")
 panelColorizer.writeConfig("configureFromAllWidgets", "true")
-panelColorizer.writeConfig("lastPreset", "/home/brandon/.config/panel-colorizer/presets/EvilMorty Clean Dock")
 panelColorizer.writeConfig("globalSettings", JSON.stringify({
     panel: {
         normal: {
@@ -376,4 +375,4 @@ ColorAccetFile.writeEntry("ColorScheme", "EvilMorty")
 
 GeneralGlobals = ConfigFile("kdeglobals")
 GeneralGlobals.group = "General"
-GeneralGlobals.writeEntry("TerminalApplication", "konsole")
+GeneralGlobals.writeEntry("TerminalApplication", "kitty")

@@ -454,8 +454,8 @@
 1239 home/.local/share/icons/YAMIS/status/scalable/indicator-keyboard-Sy-2.svg
 1239 home/.local/share/icons/YAMIS/status/scalable/indicator-keyboard-Sy.svg
 1239 home/.local/share/icons/YAMIS/status/scalable/megaalert.svg
-12403 home/.local/share/plasma/look-and-feel/Catppuccin.EvilMorty/contents/layouts/org.kde.plasma.desktop-layout.js
-12403 home/EvilMortyTheme/Catppuccin.EvilMorty/contents/layouts/org.kde.plasma.desktop-layout.js
+12290 home/.local/share/plasma/look-and-feel/Catppuccin.EvilMorty/contents/layouts/org.kde.plasma.desktop-layout.js
+12290 home/EvilMortyTheme/Catppuccin.EvilMorty/contents/layouts/org.kde.plasma.desktop-layout.js
 1243 home/.local/share/icons/YAMIS/status/scalable/1password-panel-locked.svg
 1245 home/.local/share/icons/YAMIS/status/scalable/ayatana-indicator-keyboard-Si.svg
 1245 home/.local/share/icons/YAMIS/status/scalable/ayatana-indicator-keyboard-Sk.svg
@@ -516,8 +516,8 @@
 1276 home/.local/share/icons/YAMIS/status/scalable/fluxgui-panel.svg
 1276 home/.local/share/icons/YAMIS/status/scalable/superproductivity-tray-14.svg
 1277 home/.local/share/icons/YAMIS/status/scalable/smplayer-panel.svg
-1278 home/.local/share/plasma/look-and-feel/Catppuccin.EvilMorty/contents/plasmoidsetupscripts/org.kde.plasma.icontasks.js
-1278 home/EvilMortyTheme/Catppuccin.EvilMorty/contents/plasmoidsetupscripts/org.kde.plasma.icontasks.js
+1053 home/.local/share/plasma/look-and-feel/Catppuccin.EvilMorty/contents/plasmoidsetupscripts/org.kde.plasma.icontasks.js
+1053 home/EvilMortyTheme/Catppuccin.EvilMorty/contents/plasmoidsetupscripts/org.kde.plasma.icontasks.js
 1281 home/.local/share/icons/YAMIS/status/scalable/ayatana-indicator-keyboard-Ru.svg
 1281 home/.local/share/icons/YAMIS/status/scalable/indicator-keyboard-Ru-1.svg
 1281 home/.local/share/icons/YAMIS/status/scalable/indicator-keyboard-Ru-10.svg
@@ -1246,6 +1246,7 @@
 2155 home/.local/share/icons/YAMIS/status/scalable/harmony-tray.svg
 2159 home/.local/share/icons/YAMIS/places/16/user-trash-full.svg
 216 home/EvilMortyTheme/wallpapers/EvilHackerMorty/metadata.json
+216 home/.local/share/wallpapers/EvilHackerMorty/metadata.json
 2160 home/.local/share/icons/YAMIS/status/scalable/anatine-notification.svg
 2162 home/.local/share/icons/YAMIS/apps/scalable/system-help.svg
 2162907 home/EvilMortyTheme/current.png
@@ -1398,6 +1399,7 @@
 2359 home/.local/share/icons/YAMIS/apps/scalable/steam_icon_1313140.svg
 2362 home/.local/share/icons/YAMIS/status/scalable/pragha-panel.svg
 2362627 home/EvilMortyTheme/wallpapers/EvilHackerMorty/contents/images/1920x1080.png
+2362627 home/.local/share/wallpapers/EvilHackerMorty/contents/images/1920x1080.png
 2364 home/.local/share/icons/YAMIS/status/scalable/discord-tray.svg
 2365 home/.local/share/icons/YAMIS/apps/scalable/natron.svg
 2370 home/.local/share/icons/YAMIS/apps/scalable/micro.svg
@@ -2297,8 +2299,8 @@
 3733 home/.local/share/icons/YAMIS/mimetypes/scalable-outlined/text-xmcd.svg
 3734 home/.local/share/icons/YAMIS/status/scalable/strawberry-panel.svg
 3736 home/.local/share/plasma/plasmoids/AndromedaLauncher/contents/ui/CompactRepresentation.qml
-3737 home/.local/share/plasma/look-and-feel/Catppuccin.EvilMorty/contents/defaults
-3737 home/EvilMortyTheme/Catppuccin.EvilMorty/contents/defaults
+3718 home/.local/share/plasma/look-and-feel/Catppuccin.EvilMorty/contents/defaults
+3718 home/EvilMortyTheme/Catppuccin.EvilMorty/contents/defaults
 3740 home/.local/share/icons/YAMIS/mimetypes/scalable/video-x-generic.svg
 3742 home/.local/share/icons/YAMIS/mimetypes/scalable-outlined/application-x-nintendo-ds-rom.svg
 3743 home/.local/share/icons/YAMIS/status/scalable/cisco-tray-quarantined.svg
