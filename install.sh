@@ -15,6 +15,7 @@ run_setup=0
 prompt_restart_plasma=0
 restore_only=0
 explicit_action=0
+plasma_was_running=0
 
 usage() {
   cat <<'USAGE'
@@ -334,16 +335,21 @@ run_post_app_setup_prompts() {
 }
 
 apply_wallpaper() {
-  local wallpaper="$HOME/Downloads/content.png"
-  local fallback_wallpaper="$HOME/EvilMortyTheme/wallpapers/EvilHackerMorty/contents/images/1920x1080.png"
+  local wallpaper="$HOME/.local/share/wallpapers/EvilHackerMorty.png"
+  local fallback_wallpaper="$HOME/Downloads/content.png"
+  local source_wallpaper="$HOME/EvilMortyTheme/wallpapers/EvilHackerMorty/contents/images/1920x1080.png"
 
   if [[ "${DOTFILES_SKIP_THEME_APPLY:-0}" -eq 1 ]]; then
     log "Skipping wallpaper apply"
     return 0
   fi
 
-  if [[ ! -f "$wallpaper" && -f "$fallback_wallpaper" ]]; then
-    wallpaper="$fallback_wallpaper"
+  mkdir -p "$HOME/.local/share/wallpapers"
+
+  if [[ -f "$source_wallpaper" ]]; then
+    cp -f "$source_wallpaper" "$wallpaper"
+  elif [[ ! -f "$wallpaper" && -f "$fallback_wallpaper" ]]; then
+    cp -f "$fallback_wallpaper" "$wallpaper"
   fi
 
   if [[ -f "$wallpaper" ]]; then
@@ -355,6 +361,83 @@ apply_wallpaper() {
     fi
   else
     log "Wallpaper not found; skipping wallpaper apply"
+  fi
+}
+
+normalize_home_paths() {
+  local files=(
+    "$HOME/.config/plasmarc"
+    "$HOME/.config/plasma-org.kde.plasma.desktop-appletsrc"
+    "$HOME/.config/conky/conky.conf"
+    "$HOME/.config/autostart/conky.desktop"
+    "$HOME/.local/share/plasma/look-and-feel/Catppuccin.EvilMorty/contents/layouts/org.kde.plasma.desktop-layout.js"
+  )
+  local file
+
+  for file in "${files[@]}"; do
+    [[ -f "$file" ]] || continue
+    sed -i "s#/home/brandon#$HOME#g" "$file"
+  done
+}
+
+write_wallpaper_config() {
+  local wallpaper="$HOME/.local/share/wallpapers/EvilHackerMorty.png"
+  local plasma_config="$HOME/.config/plasma-org.kde.plasma.desktop-appletsrc"
+  local plasmarc="$HOME/.config/plasmarc"
+
+  [[ -f "$wallpaper" ]] || return 0
+
+  if [[ -f "$plasma_config" ]]; then
+    sed -i \
+      -e "s#^Image=.*#Image=file://$wallpaper#g" \
+      -e "s#^SlidePaths=.*#SlidePaths=$HOME/.local/share/wallpapers/,/usr/share/wallpapers/#g" \
+      "$plasma_config"
+  fi
+
+  if [[ -f "$plasmarc" ]]; then
+    if grep -q '^\[Wallpapers\]' "$plasmarc"; then
+      sed -i "s#^usersWallpapers=.*#usersWallpapers=$wallpaper#g" "$plasmarc"
+    else
+      printf '\n[Wallpapers]\nusersWallpapers=%s\n' "$wallpaper" >>"$plasmarc"
+    fi
+  fi
+}
+
+stop_plasma_shell_for_restore() {
+  plasma_was_running=0
+  pgrep -x plasmashell >/dev/null 2>&1 || return 0
+  plasma_was_running=1
+
+  log "Stopping Plasma shell before restoring desktop config"
+  if command -v systemctl >/dev/null 2>&1 &&
+    systemctl --user list-unit-files --no-legend plasma-plasmashell.service 2>/dev/null | grep -q '^plasma-plasmashell\.service'; then
+    systemctl --user stop plasma-plasmashell.service || true
+  elif command -v kquitapp6 >/dev/null 2>&1; then
+    kquitapp6 plasmashell >/dev/null 2>&1 || true
+  elif command -v kquitapp5 >/dev/null 2>&1; then
+    kquitapp5 plasmashell >/dev/null 2>&1 || true
+  else
+    killall plasmashell >/dev/null 2>&1 || true
+  fi
+
+  local attempt
+  for attempt in {1..30}; do
+    pgrep -x plasmashell >/dev/null 2>&1 || return 0
+    sleep 0.2
+  done
+
+  killall plasmashell >/dev/null 2>&1 || true
+}
+
+start_plasma_shell() {
+  pgrep -x plasmashell >/dev/null 2>&1 && return 0
+
+  log "Starting Plasma shell"
+  if command -v systemctl >/dev/null 2>&1 &&
+    systemctl --user list-unit-files --no-legend plasma-plasmashell.service 2>/dev/null | grep -q '^plasma-plasmashell\.service'; then
+    systemctl --user start plasma-plasmashell.service
+  else
+    nohup plasmashell --replace >/dev/null 2>&1 &
   fi
 }
 
@@ -464,16 +547,25 @@ if [[ "$enable_sddm_autologin" -eq 1 ]]; then
 fi
 
 log "Restoring dotfiles into $HOME"
+stop_plasma_shell_for_restore
 "$dotfiles_dir/restore.sh"
 
+normalize_home_paths
 apply_wallpaper
+write_wallpaper_config
 
 if [[ "$restart_plasma" -eq 1 || "$prompt_restart_plasma" -eq 1 ]]; then
-  if confirm "Restart Plasma shell now?"; then
-    restart_plasma_shell
+  if confirm "Start Plasma shell with restored theme now?"; then
+    if [[ "$plasma_was_running" -eq 1 ]]; then
+      start_plasma_shell
+    else
+      restart_plasma_shell
+    fi
   else
-    log "Skipped Plasma restart"
+    log "Skipped Plasma start"
   fi
+elif [[ "$plasma_was_running" -eq 1 ]]; then
+  start_plasma_shell
 fi
 
 log "Install complete"

@@ -32,8 +32,9 @@ On CachyOS, `./install.sh` runs the guided one-command setup:
 ./install.sh --setup
 ```
 
-That checks optional system setup, opens the app selector, restores dotfiles,
-applies the wallpaper, then asks whether to restart Plasma. Use
+That checks optional system setup, opens the app selector, stops Plasma while
+desktop config is restored, normalizes home paths, applies the wallpaper, then
+asks whether to start Plasma again. Use
 `./install.sh --restore-only` to skip app/system setup and only restore the
 dotfiles.
 
@@ -70,7 +71,7 @@ Opera GX, Code, Ghostty, Deskflow, Steam, and Lutris. App installation
 expects an Arch-like system with `pacman` and uses `paru` or `yay`. In
 `--setup`, app and system setup runs before dotfiles are restored. The restored
 Plasma config remains the source of truth; the script only reapplies the
-wallpaper afterward.
+wallpaper afterward by copying it to `~/.local/share/wallpapers/EvilHackerMorty.png`.
 
 `--enable-sddm-autologin` writes `/etc/sddm.conf.d/10-autologin.conf` for the
 current user after confirmation. It defaults to `plasma.desktop`; override with
