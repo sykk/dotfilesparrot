@@ -12,6 +12,7 @@ install_aur_helper=0
 enable_flathub=0
 enable_sddm_autologin=0
 run_setup=0
+prompt_restart_plasma=0
 
 usage() {
   cat <<'USAGE'
@@ -101,6 +102,7 @@ while [[ $# -gt 0 ]]; do
     --setup)
       run_setup=1
       install_apps=1
+      prompt_restart_plasma=1
       shift
       ;;
     -h|--help)
@@ -284,6 +286,46 @@ run_optional_setup_prompts() {
   fi
 }
 
+apply_kde_theme() {
+  local look_and_feel="Catppuccin.EvilMorty"
+  local color_scheme="EvilMorty"
+  local wallpaper="$HOME/Downloads/content.png"
+  local fallback_wallpaper="$HOME/EvilMortyTheme/wallpapers/EvilHackerMorty/contents/images/1920x1080.png"
+
+  if [[ "${DOTFILES_SKIP_THEME_APPLY:-0}" -eq 1 ]]; then
+    log "Skipping KDE theme apply"
+    return 0
+  fi
+
+  log "Applying KDE theme"
+
+  if command -v plasma-apply-lookandfeel >/dev/null 2>&1; then
+    plasma-apply-lookandfeel -a "$look_and_feel" || log "Could not apply look and feel: $look_and_feel"
+  else
+    log "plasma-apply-lookandfeel not found; skipping look and feel apply"
+  fi
+
+  if command -v plasma-apply-colorscheme >/dev/null 2>&1; then
+    plasma-apply-colorscheme "$color_scheme" || log "Could not apply color scheme: $color_scheme"
+  else
+    log "plasma-apply-colorscheme not found; skipping color scheme apply"
+  fi
+
+  if [[ ! -f "$wallpaper" && -f "$fallback_wallpaper" ]]; then
+    wallpaper="$fallback_wallpaper"
+  fi
+
+  if [[ -f "$wallpaper" ]]; then
+    if command -v plasma-apply-wallpaperimage >/dev/null 2>&1; then
+      plasma-apply-wallpaperimage "$wallpaper" || log "Could not apply wallpaper: $wallpaper"
+    else
+      log "plasma-apply-wallpaperimage not found; skipping wallpaper apply"
+    fi
+  else
+    log "Wallpaper not found; skipping wallpaper apply"
+  fi
+}
+
 restart_plasma_shell() {
   if ! pgrep -x plasmashell >/dev/null 2>&1; then
     log "Plasma shell is not running; skipping restart"
@@ -350,9 +392,6 @@ if [[ "$dry_run" -eq 1 ]]; then
   exit 0
 fi
 
-log "Restoring dotfiles into $HOME"
-"$dotfiles_dir/restore.sh"
-
 if [[ "$run_setup" -eq 1 ]]; then
   run_optional_setup_prompts
 fi
@@ -373,7 +412,12 @@ if [[ "$enable_sddm_autologin" -eq 1 ]]; then
   configure_sddm_autologin
 fi
 
-if [[ "$restart_plasma" -eq 1 ]]; then
+log "Restoring dotfiles into $HOME"
+"$dotfiles_dir/restore.sh"
+
+apply_kde_theme
+
+if [[ "$restart_plasma" -eq 1 || "$prompt_restart_plasma" -eq 1 ]]; then
   if confirm "Restart Plasma shell now?"; then
     restart_plasma_shell
   else
