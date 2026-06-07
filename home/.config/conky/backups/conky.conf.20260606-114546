@@ -1,0 +1,110 @@
+conky.config = {
+    -- Window
+    alignment = 'top_right',
+    gap_x = 28,
+    gap_y = 66,
+    minimum_width = 420,
+    maximum_width = 460,
+
+    -- Background
+    own_window = true,
+    own_window_type = 'normal',
+    own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
+    own_window_transparent = false,
+    own_window_argb_visual = true,
+    own_window_argb_value = 132,
+    own_window_colour = '030d05',
+
+    -- Border
+    draw_borders = false,
+    border_width = 0,
+    border_inner_margin = 14,
+    border_outer_margin = 0,
+
+    -- Font
+    font = 'JetBrainsMono Nerd Font:size=10',
+    use_xft = true,
+    xftalpha = 1,
+
+    -- EvilMorty palette
+    default_color = '8ee565',
+    color0 = '00ff66',
+    color1 = '79dc4c',
+    color2 = '8ee565',
+    color3 = 'bfe04e',
+    color4 = 'ff5060',
+    color5 = '79dc4c',
+    color6 = '5d9146',
+    color7 = '00aa44',
+
+    -- Update interval
+    update_interval = 2,
+    total_run_times = 0,
+
+    -- Stability
+    double_buffer = true,
+    no_buffers = true,
+    text_buffer_size = 4096,
+    cpu_avg_samples = 2,
+    net_avg_samples = 2,
+    top_cpu_separate = false,
+    top_name_verbose = false,
+    top_name_width = 14,
+    override_utf8_locale = true,
+    short_units = true,
+    pad_percents = 2,
+};
+
+conky.text = [[
+${font JetBrainsMono Nerd Font:bold:size=14}${color0}${alignr}${nodename}${font}
+${color6}${hr 1}${color}
+${font JetBrainsMono Nerd Font:bold:size=10}${color5}OS${font}${color6}${alignr}${time %a, %b %d  %H:%M}${color}
+${color6}|${color0} User/Host:${alignr}${color2}${USER}@${nodename}
+${color6}|${color0} Kernel:${alignr}${color2}${kernel}
+${color6}|${color0} Packages:${alignr}${color2}${execi 3600 pacman -Q | wc -l} pacman
+${color6}|${color0} Terminal:${alignr}${color2}${execi 86400 echo $TERM}
+${color6}|${color0} Shell:${alignr}${color2}${execi 86400 basename "$SHELL"}
+
+${color6}${hr 1}${color}
+${font JetBrainsMono Nerd Font:bold:size=10}${color5}Desktop${font}${color}
+${color6}|${color0} DE:${alignr}${color2}${execi 86400 echo $XDG_CURRENT_DESKTOP}
+${color6}|${color0} Session:${alignr}${color2}${execi 86400 echo $XDG_SESSION_TYPE}
+
+${color6}${hr 1}${color}
+${font JetBrainsMono Nerd Font:bold:size=10}${color5}Hardware${font}${color}
+${color6}|${color0} CPU:${alignr}${color2}${execi 3600 awk -F': ' '/model name/ {print $2; exit}' /proc/cpuinfo | sed 's/ CPU.*//; s/@.*//; s/  */ /g'} @ ${freq_g}GHz
+${color6}|${color0} CPU Load:${alignr}${color3}${cpu cpu0}% ${color1}${cpubar cpu0 7,120}${color}
+${color6}|${color0} Core 1:${alignr}${color2}${cpu cpu1}% ${color6}${cpubar cpu1 6,120}${color}
+${color6}|${color0} Core 2:${alignr}${color2}${cpu cpu2}% ${color6}${cpubar cpu2 6,120}${color}
+${color6}|${color0} Core 3:${alignr}${color2}${cpu cpu3}% ${color6}${cpubar cpu3 6,120}${color}
+${color6}|${color0} Core 4:${alignr}${color2}${cpu cpu4}% ${color6}${cpubar cpu4 6,120}${color}
+${color6}|${color0} Display:${alignr}${color2}${execi 3600 xdpyinfo 2>/dev/null | awk '/dimensions/ {print $2; exit}' || echo "1920x1080"}
+${color6}|${color0} Battery:${alignr}${color3}${battery_percent}% ${color1}${battery_bar 7,120}${color}
+${color6}|${color0} Swap:${alignr}${color2}${swap} / ${swapmax} ${color1}${swapbar 7,120}${color}
+${color6}|${color0} Memory:${alignr}${color2}${mem} / ${memmax} ${color1}${membar 7,120}${color}
+
+${color6}${hr 1}${color}
+${font JetBrainsMono Nerd Font:bold:size=10}${color5}Storage${font}${color}
+${color6}|${color0} Root:${alignr}${color2}${fs_used /} / ${fs_size /} (${fs_used_perc /}%)
+${color1}${fs_bar 7,420 /}${color}
+${color6}|${color0} Home:${alignr}${color2}${fs_used /home} / ${fs_size /home} (${fs_used_perc /home}%)
+${color1}${fs_bar 7,420 /home}${color}
+
+${color6}${hr 1}${color}
+${font JetBrainsMono Nerd Font:bold:size=10}${color5}System${font}${color}
+${color6}|${color0} Uptime:${alignr}${color2}${uptime}
+${color6}|${color0} Login:${alignr}${color2}${execi 60 last -1 "$USER" | awk 'NR==1 {print $1"@"$2" - "$5" "$6" "$7}'}
+${color6}|${color0} WiFi:${alignr}${if_up wlan0}${color2}${wireless_essid wlan0} ${wireless_link_qual_perc wlan0}%${else}${color4}down${endif}
+${color6}|${color0} Ethernet:${alignr}${if_up enp1s0}${color2}${addr enp1s0} ${color7}${downspeed enp1s0}/s${color2} down ${color3}${upspeed enp1s0}/s${color2} up${else}${color4}down${endif}
+
+${color6}${hr 1}${color}
+${font JetBrainsMono Nerd Font:bold:size=10}${color5}Processes${font}${color}
+${color6}|${color0} CPU top
+${color6}|  ${color1}${top name 1}${goto 310}${color3}${top cpu 1}%
+${color6}|  ${color1}${top name 2}${goto 310}${color2}${top cpu 2}%
+${color6}|  ${color1}${top name 3}${goto 310}${color2}${top cpu 3}%
+${color6}|${color0} MEM top
+${color6}|  ${color1}${top_mem name 1}${goto 310}${color3}${top_mem mem_res 1}
+${color6}|  ${color1}${top_mem name 2}${goto 310}${color2}${top_mem mem_res 2}
+${color6}|  ${color1}${top_mem name 3}${goto 310}${color2}${top_mem mem_res 3}
+]]

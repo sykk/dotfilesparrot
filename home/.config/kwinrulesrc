@@ -1,0 +1,13 @@
+[83520014-ec61-40c6-b81b-705265dd0898]
+Description=Application settings for org.kde.dolphin
+opacityactive=99
+opacityactiverule=2
+opacityinactive=99
+opacityinactiverule=2
+wmclass=dolphin org.kde.dolphin
+wmclasscomplete=true
+wmclassmatch=1
+
+[General]
+count=1
+rules=83520014-ec61-40c6-b81b-705265dd0898

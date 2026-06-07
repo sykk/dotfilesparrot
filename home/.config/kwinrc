@@ -1,0 +1,39 @@
+[Desktops]
+Id_1=7c7ca5be-da44-4eb2-9d34-6c63c2fa60ab
+Id_2=eb3b7b00-b896-4a87-a900-82cb6dd8bba6
+Id_3=3060b9bb-0bb0-4a0e-ac9f-6f229cc4a884
+Id_4=88d5872c-f8ce-4b4a-9f21-be95aeb3d097
+Name_2=New Desktop
+Name_3=New Desktop
+Name_4=New Desktop
+Number=4
+Rows=1
+
+[Plugins]
+cubeEnabled=true
+wobblywindowsEnabled=true
+
+[Tiling][3060b9bb-0bb0-4a0e-ac9f-6f229cc4a884][0a6745ab-3234-41c2-9a92-f42661485867]
+padding=4
+tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}
+
+[Tiling][7c7ca5be-da44-4eb2-9d34-6c63c2fa60ab][0a6745ab-3234-41c2-9a92-f42661485867]
+padding=4
+tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}
+
+[Tiling][88d5872c-f8ce-4b4a-9f21-be95aeb3d097][0a6745ab-3234-41c2-9a92-f42661485867]
+padding=4
+tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}
+
+[Tiling][eb3b7b00-b896-4a87-a900-82cb6dd8bba6][0a6745ab-3234-41c2-9a92-f42661485867]
+padding=4
+tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}
+
+[Xwayland]
+Scale=1
+
+[org.kde.kdecoration2]
+ButtonsOnLeft=
+ButtonsOnRight=IAX
+library=org.kde.breeze
+theme=Breeze

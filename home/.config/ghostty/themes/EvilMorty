@@ -1,0 +1,28 @@
+# EvilMorty Ghostty theme
+# Ported from ~/.config/kitty/themes/EvilMorty.conf
+
+foreground = #8ee565
+background = #030d05
+
+selection-foreground = #020a04
+selection-background = #6fc445
+
+cursor-color = #00ff66
+cursor-text = #020a04
+
+palette = 0=#020a04
+palette = 1=#ff5060
+palette = 2=#79dc4c
+palette = 3=#bfe04e
+palette = 4=#54a637
+palette = 5=#5f7d43
+palette = 6=#00aa44
+palette = 7=#8ee565
+palette = 8=#5d9146
+palette = 9=#ff7a87
+palette = 10=#8fee56
+palette = 11=#d7f06a
+palette = 12=#6fc445
+palette = 13=#8ee565
+palette = 14=#00ff66
+palette = 15=#c8ff9a

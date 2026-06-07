@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=Conky
+Comment=Start the right-side EvilMorty desktop monitor
+Exec=conky -U -q -p 4 -c /home/brandon/.config/conky/conky.conf
+Terminal=false
+X-GNOME-Autostart-enabled=true
+X-KDE-autostart-after=panel
+OnlyShowIn=KDE;
+Hidden=true

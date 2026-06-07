@@ -1,0 +1,7 @@
+.cache/
+*.log
+*.tmp
+*.swp
+*.kate-swp
+home/.config/Code - OSS/User/**/globalStorage/
+restore-backups/

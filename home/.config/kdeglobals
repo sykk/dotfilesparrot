@@ -1,0 +1,173 @@
+[ColorEffects:Disabled]
+ChangeSelectionColor=
+Color=4,12,6
+ColorAmount=0.35
+ColorEffect=2
+ContrastAmount=0.18
+ContrastEffect=0
+Enable=
+IntensityAmount=-0.8
+IntensityEffect=0
+
+[ColorEffects:Inactive]
+ChangeSelectionColor=true
+Color=4,12,6
+ColorAmount=0.45
+ColorEffect=2
+ContrastAmount=0.12
+ContrastEffect=0
+Enable=true
+IntensityAmount=-0.2
+IntensityEffect=0
+
+[Colors:Button]
+BackgroundAlternate=2,187,75
+BackgroundNormal=10,30,13
+DecorationFocus=0,255,102
+DecorationHover=0,255,102
+ForegroundActive=0,255,102
+ForegroundInactive=93,145,70
+ForegroundLink=0,255,102
+ForegroundNegative=255,80,96
+ForegroundNeutral=191,224,78
+ForegroundNormal=142,229,101
+ForegroundPositive=121,220,76
+ForegroundVisited=84,166,55
+
+[Colors:Complementary]
+BackgroundAlternate=8,23,10
+BackgroundNormal=3,13,5
+DecorationFocus=0,255,102
+DecorationHover=0,255,102
+ForegroundActive=0,255,102
+ForegroundInactive=82,126,63
+ForegroundLink=0,255,102
+ForegroundNegative=255,80,96
+ForegroundNeutral=191,224,78
+ForegroundNormal=142,229,101
+ForegroundPositive=121,220,76
+ForegroundVisited=84,166,55
+
+[Colors:Header]
+BackgroundAlternate=10,30,13
+BackgroundNormal=5,18,8
+DecorationFocus=0,255,102
+DecorationHover=0,255,102
+ForegroundActive=0,255,102
+ForegroundInactive=93,145,70
+ForegroundLink=0,255,102
+ForegroundNegative=255,80,96
+ForegroundNeutral=191,224,78
+ForegroundNormal=142,229,101
+ForegroundPositive=121,220,76
+ForegroundVisited=84,166,55
+
+[Colors:Selection]
+BackgroundAlternate=0,182,72
+BackgroundNormal=0,182,72
+DecorationFocus=0,255,102
+DecorationHover=0,255,102
+ForegroundActive=0,255,102
+ForegroundInactive=0,0,0
+ForegroundLink=186,255,197
+ForegroundNegative=255,80,96
+ForegroundNeutral=38,58,13
+ForegroundNormal=0,0,0
+ForegroundPositive=2,10,4
+ForegroundVisited=5,18,8
+
+[Colors:Tooltip]
+BackgroundAlternate=10,30,13
+BackgroundNormal=3,13,5
+DecorationFocus=0,255,102
+DecorationHover=0,255,102
+ForegroundActive=0,255,102
+ForegroundInactive=93,145,70
+ForegroundLink=0,255,102
+ForegroundNegative=255,80,96
+ForegroundNeutral=191,224,78
+ForegroundNormal=142,229,101
+ForegroundPositive=121,220,76
+ForegroundVisited=84,166,55
+
+[Colors:View]
+BackgroundAlternate=10,30,13
+BackgroundNormal=3,13,5
+DecorationFocus=0,255,102
+DecorationHover=0,255,102
+ForegroundActive=0,255,102
+ForegroundInactive=93,145,70
+ForegroundLink=0,255,102
+ForegroundNegative=255,80,96
+ForegroundNeutral=191,224,78
+ForegroundNormal=142,229,101
+ForegroundPositive=121,220,76
+ForegroundVisited=84,166,55
+
+[Colors:Window]
+BackgroundAlternate=8,23,10
+BackgroundNormal=3,13,5
+DecorationFocus=0,255,102
+DecorationHover=0,255,102
+ForegroundActive=0,255,102
+ForegroundInactive=93,145,70
+ForegroundLink=0,255,102
+ForegroundNegative=255,80,96
+ForegroundNeutral=191,224,78
+ForegroundNormal=142,229,101
+ForegroundPositive=121,220,76
+ForegroundVisited=84,166,55
+
+[General]
+AccentColor=0,255,102
+ColorSchemeHash=965a4a2b58da65a8c43d76209dd9fc3d8b16cbe4
+LastUsedCustomAccentColor=0,255,102
+Name=EvilMorty
+TerminalApplication=kitty
+TerminalService=kitty.desktop
+XftAntialias=true
+XftHintStyle=hintslight
+XftSubPixel=none
+accentActiveTitlebar=false
+accentColorFromWallpaper=false
+fixed=JetBrainsMono Nerd Font,10,-1,5,400,0,0,0,0,0,0,0,0,0,0,1,,0,0
+font=JetBrainsMono Nerd Font,10,-1,5,400,0,0,0,0,0,0,0,0,0,0,1,,0,0
+menuFont=JetBrainsMono Nerd Font,10,-1,5,400,0,0,0,0,0,0,0,0,0,0,1,,0,0
+shadeSortColumn=true
+smallestReadableFont=JetBrainsMono Nerd Font,8,-1,5,400,0,0,0,0,0,0,0,0,0,0,1,,0,0
+toolBarFont=JetBrainsMono Nerd Font,10,-1,5,400,0,0,0,0,0,0,0,0,0,0,1,,0,0
+
+[Icons]
+Theme=YAMIS
+
+[KDE]
+AnimationDurationFactor=0.25
+LookAndFeelPackage=Catppuccin.EvilMorty
+contrast=7
+frameContrast=0.2
+
+[KFileDialog Settings]
+Allow Expansion=false
+Automatically select filename extension=true
+Breadcrumb Navigation=true
+Decoration position=2
+Show Full Path=false
+Show Inline Previews=true
+Show Preview=false
+Show Speedbar=true
+Show hidden files=false
+Sort by=Name
+Sort directories first=true
+Sort hidden files last=false
+Sort reversed=false
+Speedbar Width=140
+View Style=DetailTree
+
+[WM]
+activeBackground=3,13,5
+activeBlend=121,220,76
+activeFont=JetBrainsMono Nerd Font,10,-1,5,400,0,0,0,0,0,0,0,0,0,0,1,,0,0
+activeForeground=142,229,101
+inactiveBackground=5,18,8
+inactiveBlend=84,166,55
+inactiveForeground=93,145,70

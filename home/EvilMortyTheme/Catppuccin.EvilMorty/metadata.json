@@ -1,0 +1,47 @@
+{
+    "KPackageStructure": "Plasma/LookAndFeel",
+    "KPlugin": {
+        "Authors": [
+            {
+                "Email": "zayronxio@gmail.com",
+                "Name": "zayronxio"
+            }
+        ],
+        "Category": "",
+        "ServiceTypes": [
+            "Plasma/LookAndFeel"
+        ],
+        "Description": "Evil Morty command-center theme with matrix green accents",
+        "Id": "Catppuccin.EvilMorty",
+        "License": "GPLv3+",
+        "Name": "EvilHackerMorty",
+        "Website": "https://store.kde.org/p/2269983/"
+        },
+        "X-KPackage-Dependencies": [
+        "kns://colorschemes.knsrc/api.kde-look.org/2269981",
+        "kns://wallpaperplugin.knsrc/api.kde-look.org/2318107",
+        "kns://colorschemes.knsrc/api.kde-look.org/2271054",
+        "kns://colorschemes.knsrc/api.kde-look.org/2251273",
+        "kns://plasma-themes.knsrc/api.kde-look.org/2218601",
+        "kns://plasmoids.knsrc/api.kde-look.org/2238525",
+        "kns://plasmoids.knsrc/api.kde-look.org/2199942",
+        "kns://icons.knsrc/api.kde-look.org/2239645",
+        "kns://xcursor.knsrc/api.kde-look.org/2083798",
+        "kns://plasmoids.knsrc/api.kde-look.org/2137418",
+        "kns://plasmoids.knsrc/api.kde-look.org/2136636",
+        "kns://aurorae.knsrc/api.kde-look.org/1969727",
+        "kns://plasmoids.knsrc/api.kde-look.org/2147882",
+        "kns://wallpaper.knsrc/api.kde-look.org/2279885",
+        "kns://wallpaper.knsrc/api.kde-look.org/2269979",
+        "kns://wallpaper.knsrc/api.kde-look.org/2283815",
+        "kns://wallpaper.knsrc/api.kde-look.org/2283884",
+        "kns://sddmtheme.knsrc/api.kde-look.org/2135240",
+        "kns://plasmoids.knsrc/api.kde-look.org/2230382",
+        "kns://colorschemes.knsrc/api.kde-look.org/2269947",
+        "kns://plasmoids.knsrc/api.kde-look.org/2136288",
+        "kns://plasmoids.knsrc/api.kde-look.org/2179317",
+        "kns://plasmoids.knsrc/api.kde-look.org/2168466",
+        "kns://plasmoids.knsrc/api.kde-look.org/2272210",
+        "kns://plasmoids.knsrc/api.kde-look.org/2270523"
+         ]
+         }

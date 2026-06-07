@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <rect id="hint-tile-center" width="2" height="2" x="0" y="0" fill="#ff00ff"/>
+  <rect id="hint-top-margin" width="2" height="4" x="31" y="16" fill="#ff00ff"/>
+  <rect id="hint-bottom-margin" width="2" height="4" x="31" y="44" fill="#ff00ff"/>
+  <rect id="hint-left-margin" width="4" height="2" x="16" y="31" fill="#ff00ff"/>
+  <rect id="hint-right-margin" width="4" height="2" x="44" y="31" fill="#ff00ff"/>
+  <rect id="hint-top-inset" width="2" height="2" x="31" y="20" fill="#00ff00"/>
+  <rect id="hint-bottom-inset" width="2" height="2" x="31" y="42" fill="#00ff00"/>
+  <rect id="hint-left-inset" width="2" height="2" x="20" y="31" fill="#00ff00"/>
+  <rect id="hint-right-inset" width="2" height="2" x="42" y="31" fill="#00ff00"/>
+  <rect id="center" width="24" height="24" x="20" y="20" fill="none"/>
+  <rect id="top" width="24" height="4" x="20" y="16" fill="none"/>
+  <rect id="bottom" width="24" height="4" x="20" y="44" fill="none"/>
+  <rect id="left" width="4" height="24" x="16" y="20" fill="none"/>
+  <rect id="right" width="4" height="24" x="44" y="20" fill="none"/>
+  <rect id="topleft" width="4" height="4" x="16" y="16" fill="none"/>
+  <rect id="topright" width="4" height="4" x="44" y="16" fill="none"/>
+  <rect id="bottomleft" width="4" height="4" x="16" y="44" fill="none"/>
+  <rect id="bottomright" width="4" height="4" x="44" y="44" fill="none"/>
+  <rect id="shadow-center" width="24" height="24" x="20" y="20" fill="none"/>
+  <rect id="shadow-top" width="24" height="4" x="20" y="16" fill="none"/>
+  <rect id="shadow-bottom" width="24" height="4" x="20" y="44" fill="none"/>
+  <rect id="shadow-left" width="4" height="24" x="16" y="20" fill="none"/>
+  <rect id="shadow-right" width="4" height="24" x="44" y="20" fill="none"/>
+  <rect id="shadow-topleft" width="4" height="4" x="16" y="16" fill="none"/>
+  <rect id="shadow-topright" width="4" height="4" x="44" y="16" fill="none"/>
+  <rect id="shadow-bottomleft" width="4" height="4" x="16" y="44" fill="none"/>
+  <rect id="shadow-bottomright" width="4" height="4" x="44" y="44" fill="none"/>
+</svg>

@@ -1,0 +1,14 @@
+theme = EvilMorty
+
+font-family = JetBrains Mono Nerd Font
+font-size = 9
+
+background-opacity = 0.78
+
+window-padding-x = 10
+window-padding-y = 10
+
+cursor-style = block
+cursor-style-blink = true
+
+bell-features = no-audio
