@@ -54,8 +54,8 @@ Optional setup helpers:
 ```
 
 `--install-apps` opens a terminal checklist for Discord, VLC, Spotify, Git,
-Opera, Code, Ghostty, Deskflow, Steam, and Lutris. App installation expects an
-Arch-like system with `pacman` and uses `paru` or `yay`.
+GitHub CLI, Opera, Code, Ghostty, Deskflow, Steam, and Lutris. App installation
+expects an Arch-like system with `pacman` and uses `paru` or `yay`.
 
 `--enable-sddm-autologin` writes `/etc/sddm.conf.d/10-autologin.conf` for the
 current user after confirmation. It defaults to `plasma.desktop`; override with

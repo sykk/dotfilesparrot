@@ -125,6 +125,7 @@ APP_PACKAGES=(
   "vlc|VLC|vlc|ON"
   "spotify|Spotify|spotify|ON"
   "git|Git|git|ON"
+  "github-cli|GitHub CLI|github-cli|ON"
   "opera|Opera|opera|ON"
   "code|Code|code|ON"
   "ghostty|Ghostty|ghostty|ON"
