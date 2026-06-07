@@ -142,7 +142,7 @@ Theme=YAMIS
 
 [KDE]
 AnimationDurationFactor=0.25
-LookAndFeelPackage=Catppuccin.EvilMorty
+LookAndFeelPackage=EvilMorty
 contrast=7
 frameContrast=0.2
 

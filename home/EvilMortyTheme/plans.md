@@ -4,24 +4,24 @@ I'd start with:
 
 Plasma Theme
 
-Catppuccin Mocha Global Theme
+EvilMorty Mocha Global Theme
 
-Then modify the accent colors from Catppuccin's default purple into:
+Then modify the accent colors from EvilMorty's default purple into:
 
 Neon Green #7CFC00
 Matrix Green #00FF66
 Dark Emerald #00AA44
 
-The Catppuccin Plasma theme is actively maintained for Plasma 6.
+The EvilMorty Plasma theme is actively maintained for Plasma 6.
 
 Window Decorations
 
 Use:
 
-Catppuccin Modern Aurora
-or Klassy with custom green borders
+EvilMorty Modern Aurora
+or Breeze with custom green borders
 
-Catppuccin Aurora decorations are available directly from KDE Store.
+EvilMorty Aurora decorations are available directly from KDE Store.
 
 Icons
 
@@ -33,7 +33,7 @@ Option B
 Papirus Dark
 recolored folders
 
-Many Plasma users combine Catppuccin with Papirus folder recolors for a polished look.
+Many Plasma users combine EvilMorty with Papirus folder recolors for a polished look.
 
 Phase 2 — Panel
 
@@ -258,7 +258,7 @@ But:
 What I'd install first
 Global Theme
 
-I'd skip Catppuccin.
+I'd skip EvilMorty.
 
 For this particular rice I would use:
 

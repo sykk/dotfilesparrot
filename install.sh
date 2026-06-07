@@ -147,7 +147,6 @@ APP_PACKAGES=(
   "ghostty|Ghostty|ghostty|ON"
   "fastfetch|Fastfetch|fastfetch|ON"
   "conky|Conky|conky|ON"
-  "klassy|Klassy window decorations|klassy|ON"
   "deskflow|Deskflow|deskflow|ON"
   "steam|Steam|steam|ON"
   "lutris|Lutris|lutris|ON"
@@ -383,7 +382,7 @@ normalize_home_paths() {
     "$HOME/.config/conky/conky.conf"
     "$HOME/.config/autostart/conky.desktop"
     "$HOME/.config/fastfetch/config.jsonc"
-    "$HOME/.local/share/plasma/look-and-feel/Catppuccin.EvilMorty/contents/layouts/org.kde.plasma.desktop-layout.js"
+    "$HOME/.local/share/plasma/look-and-feel/EvilMorty/contents/layouts/org.kde.plasma.desktop-layout.js"
   )
   local file
 
@@ -399,16 +398,16 @@ apply_window_decoration_config() {
   [[ -f "$kwinrc" ]] || return 0
 
   if command -v kwriteconfig6 >/dev/null 2>&1; then
-    kwriteconfig6 --file "$kwinrc" --group org.kde.kdecoration2 --key ButtonsOnLeft XIA
-    kwriteconfig6 --file "$kwinrc" --group org.kde.kdecoration2 --key ButtonsOnRight ""
-    kwriteconfig6 --file "$kwinrc" --group org.kde.kdecoration2 --key library org.kde.klassy
-    kwriteconfig6 --file "$kwinrc" --group org.kde.kdecoration2 --key theme Klassy
+    kwriteconfig6 --file "$kwinrc" --group org.kde.kdecoration2 --key ButtonsOnLeft ""
+    kwriteconfig6 --file "$kwinrc" --group org.kde.kdecoration2 --key ButtonsOnRight IAX
+    kwriteconfig6 --file "$kwinrc" --group org.kde.kdecoration2 --key library org.kde.breeze
+    kwriteconfig6 --file "$kwinrc" --group org.kde.kdecoration2 --key theme Breeze
   else
     sed -i \
-      -e 's/^ButtonsOnLeft=.*/ButtonsOnLeft=XIA/' \
-      -e 's/^ButtonsOnRight=.*/ButtonsOnRight=/' \
-      -e 's/^library=.*/library=org.kde.klassy/' \
-      -e 's/^theme=.*/theme=Klassy/' \
+      -e 's/^ButtonsOnLeft=.*/ButtonsOnLeft=/' \
+      -e 's/^ButtonsOnRight=.*/ButtonsOnRight=IAX/' \
+      -e 's/^library=.*/library=org.kde.breeze/' \
+      -e 's/^theme=.*/theme=Breeze/' \
       "$kwinrc"
   fi
 }

@@ -12,7 +12,7 @@
             "Plasma/LookAndFeel"
         ],
         "Description": "Evil Morty command-center theme with matrix green accents",
-        "Id": "Catppuccin.EvilMorty",
+        "Id": "EvilMorty",
         "License": "GPLv3+",
         "Name": "EvilHackerMorty",
         "Website": "https://store.kde.org/p/2269983/"

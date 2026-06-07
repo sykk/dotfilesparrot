@@ -3,5 +3,5 @@ LayoutName=big_icons
 
 [org.kde.kdecoration2]
 NoPlugin=false
-library=org.kde.klassy
-theme=Klassy
+library=org.kde.breeze
+theme=Breeze

@@ -19,10 +19,10 @@ LayoutName=org.kde.breeze.desktop
 Image=EvilHackerMorty
 
 [kwinrc][org.kde.kdecoration2]
-ButtonsOnLeft=XIA
-ButtonsOnRight=
-library=org.kde.klassy
-theme=Klassy
+ButtonsOnLeft=
+ButtonsOnRight=IAX
+library=org.kde.breeze
+theme=Breeze
 
 [plasmarc][Theme]
 name=EvilMorty.Transparent

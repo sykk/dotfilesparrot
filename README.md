@@ -6,7 +6,7 @@ This directory backs up the current desktop setup using home-relative paths unde
 ## Included
 
 - KDE/Plasma config: panels, shell, KWin, KDE globals, notifications, defaults
-- Active Plasma assets: `Catppuccin.EvilMorty`, `EvilMorty.Transparent`, and
+- Active Plasma assets: `EvilMorty`, `EvilMorty.Transparent`, and
   active local plasmoids
 - EvilMorty theme source and exported Code profile
 - Active color/icon/cursor themes: `EvilMorty.colors`, `YAMIS`,
@@ -67,14 +67,14 @@ Optional setup helpers:
 ```
 
 `--install-apps` opens a terminal checklist for Discord, Git, GitHub CLI,
-Opera GX, Code, Ghostty, Fastfetch, Conky, Klassy, Deskflow, Steam, and Lutris.
+Opera GX, Code, Ghostty, Fastfetch, Conky, Deskflow, Steam, and Lutris.
 App installation expects an Arch-like system with `pacman` and uses `paru` or `yay`. In
 `--setup`, app and system setup runs before dotfiles are restored. The restored
 Plasma config remains the source of truth; the script only reapplies the
 wallpaper afterward by copying it to `~/.local/share/wallpapers/EvilHackerMorty.png`.
 
 The bundled Global Theme package is also kept in sync with the restored setup:
-it uses YAMIS icons, Klassy window decorations, the EvilHackerMorty wallpaper
+it uses YAMIS icons, Breeze window decorations, the EvilHackerMorty wallpaper
 package, and the same dock launcher set as the saved Plasma config.
 
 `--enable-sddm-autologin` writes `/etc/sddm.conf.d/10-autologin.conf` for the
