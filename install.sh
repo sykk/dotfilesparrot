@@ -170,6 +170,23 @@ aur_helper() {
   fi
 }
 
+aur_install() {
+  local helper="$1"
+  shift
+
+  case "$helper" in
+    paru)
+      PAGER=cat "$helper" -S --needed --noconfirm --skipreview "$@"
+      ;;
+    yay)
+      PAGER=cat "$helper" -S --needed --noconfirm --answerclean None --answerdiff None --answeredit None "$@"
+      ;;
+    *)
+      PAGER=cat "$helper" -S --needed --noconfirm "$@"
+      ;;
+  esac
+}
+
 install_paru_helper() {
   local helper
   helper="$(aur_helper || true)"
@@ -249,7 +266,7 @@ install_selected_apps() {
   fi
 
   log "Installing selected apps with $helper: ${packages[*]}"
-  "$helper" -S --needed "${packages[@]}"
+  aur_install "$helper" "${packages[@]}"
 }
 
 ensure_app_selector() {
