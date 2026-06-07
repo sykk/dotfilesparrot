@@ -16,6 +16,7 @@
 57 home/.bash_profile
 57 home/.config/conky/backups/conkyrc.20260606-114546
 57 home/.conkyrc
+75 home/.config/Deskflow/tls/trusted-servers
 81 home/.config/plasmarc
 83 home/.config/plasmanotifyrc
 93 home/.config/btop/btop.conf
@@ -34,6 +35,7 @@
 216 home/.local/share/wallpapers/EvilHackerMorty/metadata.json
 216 home/EvilMortyTheme/wallpapers/EvilHackerMorty/metadata.json
 218 home/.config/ghostty/config
+225 home/.config/autostart/org.deskflow.deskflow.desktop
 240 home/.local/share/plasma/plasmoids/luisbocanegra.panel.colorizer/contents/ui/tools/list_presets.sh
 260 home/.config/kate/externaltools/Search%20KDE%20API.ini
 265 home/.config/kate/externaltools/git%20blame.ini
@@ -1687,6 +1689,7 @@
 1096 home/.local/share/icons/YAMIS/status/scalable/superproductivity-tray-4.svg
 1098 home/.local/share/icons/YAMIS/status/scalable/superproductivity-tray-7.svg
 1100 home/.local/share/icons/YAMIS/status/scalable/gitify-tray.svg
+1103 home/.config/Deskflow/Deskflow.conf
 1103 home/.local/share/icons/YAMIS/status/scalable/ayatana-indicator-keyboard-Hr.svg
 1103 home/.local/share/icons/YAMIS/status/scalable/indicator-keyboard-Hr-1.svg
 1103 home/.local/share/icons/YAMIS/status/scalable/indicator-keyboard-Hr-2.svg
@@ -2887,6 +2890,7 @@
 2665 home/.local/share/icons/YAMIS/preferences/scalable/preferences-desktop-display-randr.svg
 2666 home/.local/share/icons/YAMIS/categories/scalable/applications-internet.svg
 2667 home/.local/share/icons/YAMIS/preferences/scalable/preferences-tabs.svg
+2668 home/.config/Deskflow/tls/deskflow.pem
 2668 home/.local/share/icons/YAMIS/apps/scalable/io.github.wiiznokes.fan-control.svg
 2669 home/.local/share/icons/YAMIS/preferences/scalable/preferences-system-network.svg
 2672 home/.local/share/icons/YAMIS/places/16/user-desktop.svg

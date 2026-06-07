@@ -12,7 +12,6 @@ install_aur_helper=0
 enable_flathub=0
 enable_sddm_autologin=0
 run_setup=0
-prompt_restart_plasma=0
 restore_only=0
 explicit_action=0
 plasma_was_running=0
@@ -29,13 +28,13 @@ Options:
   -b, --branch NAME    Branch to clone or update
       --no-pull        Do not pull updates before restoring
       --dry-run        Show what would be restored without changing $HOME
-      --restart-plasma Prompt to restart Plasma after restoring dotfiles
+      --restart-plasma Restart Plasma after restoring dotfiles
       --install-apps   Select and install apps with a terminal checklist
       --install-aur-helper
                        Install an AUR helper when one is missing
       --enable-flathub Enable the Flathub Flatpak remote
       --enable-sddm-autologin
-                       Prompt to configure SDDM autologin for this user
+                       Configure SDDM autologin for this user
       --setup          Run app selection plus optional system setup prompts
       --restore-only   Only restore dotfiles and apply wallpaper
   -h, --help           Show this help
@@ -112,7 +111,7 @@ while [[ $# -gt 0 ]]; do
     --setup)
       run_setup=1
       install_apps=1
-      prompt_restart_plasma=1
+      enable_sddm_autologin=1
       explicit_action=1
       shift
       ;;
@@ -308,12 +307,6 @@ configure_sddm_autologin() {
   session_name="${SDDM_AUTOLOGIN_SESSION:-plasma.desktop}"
   config_path="/etc/sddm.conf.d/10-autologin.conf"
 
-  [[ -t 0 ]] || die "--enable-sddm-autologin requires an interactive terminal"
-  confirm "Enable SDDM autologin for $user_name using session '$session_name'?" || {
-    log "Skipped SDDM autologin"
-    return 0
-  }
-
   log "Writing $config_path"
   sudo mkdir -p /etc/sddm.conf.d
   printf '[Autologin]\nUser=%s\nSession=%s\n' "$user_name" "$session_name" |
@@ -326,14 +319,12 @@ run_pre_app_setup_prompts() {
   fi
 }
 
-run_post_app_setup_prompts() {
+run_post_app_setup() {
   if confirm "Enable Flathub Flatpak remote?"; then
     enable_flathub_remote
   fi
 
-  if confirm "Configure SDDM autologin?"; then
-    configure_sddm_autologin
-  fi
+  configure_sddm_autologin
 }
 
 stage_wallpaper() {
@@ -561,7 +552,7 @@ fi
 if [[ "$explicit_action" -eq 0 ]]; then
   run_setup=1
   install_apps=1
-  prompt_restart_plasma=1
+  enable_sddm_autologin=1
 fi
 
 if [[ "$restore_only" -eq 1 ]]; then
@@ -586,7 +577,7 @@ if [[ "$install_apps" -eq 1 ]]; then
 fi
 
 if [[ "$run_setup" -eq 1 ]]; then
-  run_post_app_setup_prompts
+  run_post_app_setup
 fi
 
 if [[ "$enable_flathub" -eq 1 ]]; then
@@ -606,20 +597,7 @@ stage_wallpaper
 write_wallpaper_config
 apply_window_decoration_config
 
-if [[ "$restart_plasma" -eq 1 || "$prompt_restart_plasma" -eq 1 ]]; then
-  if confirm "Start Plasma shell with restored theme now?"; then
-    if [[ "$plasma_was_running" -eq 1 ]]; then
-      start_plasma_shell
-    else
-      restart_plasma_shell
-    fi
-    wait_for_plasma_shell || true
-    reconfigure_kwin
-    apply_wallpaper_live
-  else
-    log "Skipped Plasma start"
-  fi
-elif [[ "$plasma_was_running" -eq 1 ]]; then
+if [[ "$plasma_was_running" -eq 1 || "$restart_plasma" -eq 1 ]]; then
   start_plasma_shell
   wait_for_plasma_shell || true
   reconfigure_kwin
@@ -627,4 +605,4 @@ elif [[ "$plasma_was_running" -eq 1 ]]; then
 fi
 
 log "Install complete"
-log "Use --restart-plasma, or log out and back in, for KDE changes to fully reload."
+log "KDE changes were reloaded if Plasma was running or --restart-plasma was used; otherwise log out and back in."

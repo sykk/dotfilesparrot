@@ -13,7 +13,7 @@ This directory backs up the current desktop setup using home-relative paths unde
   `Apple-cursors`
 - Bundled EvilHackerMorty wallpaper package
 - Panel Colorizer preset
-- Conky config and autostart entry
+- Conky and Deskflow configs plus autostart entries
 - Kate config and external tools
 - Code OSS user settings/profile theme files
 - GTK, Kitty, Ghostty, btop, shell profile files
@@ -34,7 +34,7 @@ On CachyOS, `./install.sh` runs the guided one-command setup:
 
 That checks optional system setup, opens the app selector, stops Plasma while
 desktop config is restored, normalizes home paths, applies the wallpaper, then
-asks whether to start Plasma again. Use
+restarts Plasma automatically if it was running. Use
 `./install.sh --restore-only` to skip app/system setup and only restore the
 dotfiles.
 
@@ -52,8 +52,6 @@ DOTFILES_REPO_URL=https://github.com/USER/dotfiles.git bash install.sh
 ```
 
 Use `./install.sh --dry-run` to preview restored files before changing `$HOME`.
-Use `./install.sh --restart-plasma` to confirm and restart Plasma after the
-theme files are restored.
 
 Optional setup helpers:
 
@@ -72,13 +70,14 @@ App installation expects an Arch-like system with `pacman` and uses `paru` or `y
 `--setup`, app and system setup runs before dotfiles are restored. The restored
 Plasma config remains the source of truth; the script only reapplies the
 wallpaper afterward by copying it to `~/.local/share/wallpapers/EvilMorty.png`.
+`--setup` also configures SDDM autologin for the current user.
 
 The bundled Global Theme package is also kept in sync with the restored setup:
 it uses YAMIS icons, Breeze window decorations, the EvilHackerMorty wallpaper
 package, and the same dock launcher set as the saved Plasma config.
 
 `--enable-sddm-autologin` writes `/etc/sddm.conf.d/10-autologin.conf` for the
-current user after confirmation. It defaults to `plasma.desktop`; override with
+current user. It defaults to `plasma.desktop`; override with
 `SDDM_AUTOLOGIN_SESSION=name.desktop` if needed.
 
 ## Restore
