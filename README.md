@@ -26,8 +26,9 @@ From a checked-out repo, run:
 ./install.sh
 ```
 
-The installer has no options. It prompts once for the configured package set,
-optionally enables Flathub and SDDM autologin, stops Plasma while desktop config
+The installer has no options and must be run as your normal user, not with
+`sudo`. It prompts once for the configured package set,
+optionally enables Flathub, writes SDDM autologin, stops Plasma while desktop config
 is restored, normalizes home paths, applies EvilMorty colors before window
 decorations, stages the wallpaper at `~/.local/share/wallpapers/EvilMorty.png`,
 then restarts Plasma automatically if it was running.
@@ -42,9 +43,9 @@ The bundled Global Theme package is also kept in sync with the restored setup:
 it uses YAMIS icons, Klassy window decorations, the EvilHackerMorty wallpaper
 package, and the same dock launcher set as the saved Plasma config.
 
-SDDM autologin writes `/etc/sddm.conf.d/99-autologin.conf` for the current user.
-It defaults to `plasma`; override with
-`SDDM_AUTOLOGIN_SESSION=name` if needed. The script creates a
+SDDM autologin writes `/etc/sddm.conf.d/autologin.conf` and a matching
+`/etc/sddm.conf.d/99-autologin.conf` for the current user. It defaults to
+`plasma`; override with `SDDM_AUTOLOGIN_SESSION=name` if needed. The script creates a
 timestamped backup directory before syncing files back to `$HOME`.
 
 ## Notes

@@ -3,6 +3,11 @@ set -euo pipefail
 
 plasma_was_running=0
 
+if [[ "${EUID:-$(id -u)}" -eq 0 ]]; then
+  printf 'Error: do not run install.sh as root; run ./install.sh as your user.\n' >&2
+  exit 1
+fi
+
 APP_PACKAGES=(
   discord
   git
@@ -132,19 +137,20 @@ enable_flathub_remote() {
 }
 
 configure_sddm_autologin() {
-  local user_name session_name config_path
+  local user_name session_name autologin_config override_config
 
   require_command sudo
 
-  user_name="${SUDO_USER:-$USER}"
+  user_name="$USER"
   session_name="${SDDM_AUTOLOGIN_SESSION:-plasma}"
-  config_path="/etc/sddm.conf.d/99-autologin.conf"
+  autologin_config="/etc/sddm.conf.d/autologin.conf"
+  override_config="/etc/sddm.conf.d/99-autologin.conf"
 
-  log "Writing $config_path"
+  log "Writing SDDM autologin config"
   sudo mkdir -p /etc/sddm.conf.d
-  sudo rm -f /etc/sddm.conf.d/10-autologin.conf /etc/sddm.conf.d/autologin.conf
-  printf '[Autologin]\nUser=%s\nSession=%s\nRelogin=true\n' "$user_name" "$session_name" |
-    sudo tee "$config_path" >/dev/null
+  sudo rm -f /etc/sddm.conf.d/10-autologin.conf
+  printf '[Autologin]\nUser=%s\nSession=%s\nRelogin=true\n' "$user_name" "$session_name" | sudo tee "$autologin_config" >/dev/null
+  sudo cp -f "$autologin_config" "$override_config"
 }
 
 restore_dotfiles() {
@@ -249,6 +255,7 @@ apply_app_configs() {
 
 apply_window_decoration_config() {
   local kwinrc="$HOME/.config/kwinrc"
+  local klassyrc="$HOME/.config/klassy/klassyrc"
 
   [[ -f "$kwinrc" ]] || return 0
 
@@ -257,6 +264,10 @@ apply_window_decoration_config() {
     kwriteconfig6 --file "$kwinrc" --group org.kde.kdecoration2 --key ButtonsOnRight IAX
     kwriteconfig6 --file "$kwinrc" --group org.kde.kdecoration2 --key library org.kde.klassy
     kwriteconfig6 --file "$kwinrc" --group org.kde.kdecoration2 --key theme Klassy
+    if [[ -f "$klassyrc" ]]; then
+      kwriteconfig6 --file "$klassyrc" --group Global --key LookAndFeelSet EvilMorty
+      kwriteconfig6 --file "$klassyrc" --group Windeco --key TitleAlignment AlignLeft
+    fi
   else
     sed -i \
       -e 's/^ButtonsOnLeft=.*/ButtonsOnLeft=/' \
@@ -265,6 +276,23 @@ apply_window_decoration_config() {
       -e 's/^theme=.*/theme=Klassy/' \
       "$kwinrc"
   fi
+}
+
+refresh_window_theme() {
+  local kdeglobals="$HOME/.config/kdeglobals"
+
+  if command -v kwriteconfig6 >/dev/null 2>&1; then
+    kwriteconfig6 --file "$kdeglobals" --group WM --key activeBackground "3,13,5"
+    kwriteconfig6 --file "$kdeglobals" --group WM --key activeForeground "142,229,101"
+    kwriteconfig6 --file "$kdeglobals" --group WM --key inactiveBackground "5,18,8"
+    kwriteconfig6 --file "$kdeglobals" --group WM --key inactiveForeground "93,145,70"
+  fi
+
+  if command -v plasma-apply-colorscheme >/dev/null 2>&1; then
+    plasma-apply-colorscheme EvilMorty >/dev/null 2>&1 || true
+  fi
+
+  reconfigure_kwin
 }
 
 write_wallpaper_config() {
@@ -370,11 +398,12 @@ main() {
   apply_evilmorty_colors
   write_wallpaper_config
   apply_window_decoration_config
+  refresh_window_theme
 
   if [[ "$plasma_was_running" -eq 1 ]]; then
     start_plasma_shell
     wait_for_plasma_shell || true
-    reconfigure_kwin
+    refresh_window_theme
     apply_wallpaper_live
   fi
 
