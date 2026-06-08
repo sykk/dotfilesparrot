@@ -12,6 +12,7 @@ APP_PACKAGES=(
   fastfetch
   conky
   deskflow
+  7zip
   steam
   lutris
 )
@@ -43,6 +44,27 @@ require_command() {
   command -v "$1" >/dev/null 2>&1 || die "missing required command: $1"
 }
 
+vulkan_packages() {
+  local pci_info
+
+  if ! command -v lspci >/dev/null 2>&1; then
+    printf '%s\n' vulkan-swrast lib32-vulkan-swrast
+    return 0
+  fi
+
+  pci_info="$(lspci 2>/dev/null | tr '[:upper:]' '[:lower:]')"
+
+  if grep -Eq 'vga|3d|display' <<<"$pci_info" && grep -q 'nvidia' <<<"$pci_info"; then
+    printf '%s\n' nvidia-utils lib32-nvidia-utils
+  elif grep -Eq 'vga|3d|display' <<<"$pci_info" && grep -Eq 'amd|ati' <<<"$pci_info"; then
+    printf '%s\n' vulkan-radeon lib32-vulkan-radeon
+  elif grep -Eq 'vga|3d|display' <<<"$pci_info" && grep -q 'intel' <<<"$pci_info"; then
+    printf '%s\n' vulkan-intel lib32-vulkan-intel
+  else
+    printf '%s\n' vulkan-swrast lib32-vulkan-swrast
+  fi
+}
+
 aur_helper() {
   if command -v paru >/dev/null 2>&1; then
     printf 'paru\n'
@@ -71,6 +93,8 @@ install_aur_packages() {
 }
 
 install_packages() {
+  local packages=()
+
   if ! confirm "Install configured packages now?"; then
     log "Package installation skipped"
     return 0
@@ -82,8 +106,11 @@ install_packages() {
   log "Upgrading system and repository packages"
   sudo pacman -Syu --noconfirm
 
-  log "Installing packages with pacman: ${APP_PACKAGES[*]}"
-  sudo pacman -S --needed --noconfirm "${APP_PACKAGES[@]}"
+  mapfile -t packages < <(vulkan_packages)
+  packages+=("${APP_PACKAGES[@]}")
+
+  log "Installing packages with pacman: ${packages[*]}"
+  sudo pacman -S --needed --noconfirm "${packages[@]}"
 
   install_aur_packages
 }

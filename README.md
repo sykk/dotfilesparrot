@@ -34,9 +34,9 @@ then restarts Plasma automatically if it was running.
 
 Package installation expects an Arch-like system with `pacman`. It upgrades
 first with `sudo pacman -Syu --noconfirm`, installs Discord, Git, GitHub CLI,
-Code, Ghostty, Fastfetch, Conky, Deskflow, Steam, and Lutris from the
-repositories, then installs `klassy` and Opera GX from AUR using an existing
-`paru` or `yay`.
+Code, Ghostty, Fastfetch, Conky, Deskflow, 7zip, Steam, Lutris, and detected
+Vulkan driver packages from the repositories, then installs `klassy` and Opera
+GX from AUR using an existing `paru` or `yay`.
 
 The bundled Global Theme package is also kept in sync with the restored setup:
 it uses YAMIS icons, Breeze window decorations, the EvilHackerMorty wallpaper
