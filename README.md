@@ -39,7 +39,7 @@ Vulkan driver packages from the repositories, then installs `klassy` and Opera
 GX from AUR using an existing `paru` or `yay`.
 
 The bundled Global Theme package is also kept in sync with the restored setup:
-it uses YAMIS icons, Breeze window decorations, the EvilHackerMorty wallpaper
+it uses YAMIS icons, Klassy window decorations, the EvilHackerMorty wallpaper
 package, and the same dock launcher set as the saved Plasma config.
 
 If enabled, SDDM autologin writes `/etc/sddm.conf.d/10-autologin.conf` for the

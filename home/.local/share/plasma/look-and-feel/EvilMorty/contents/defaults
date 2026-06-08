@@ -21,8 +21,8 @@ Image=EvilHackerMorty
 [kwinrc][org.kde.kdecoration2]
 ButtonsOnLeft=
 ButtonsOnRight=IAX
-library=org.kde.breeze
-theme=Breeze
+library=org.kde.klassy
+theme=Klassy
 
 [plasmarc][Theme]
 name=EvilMorty.Transparent

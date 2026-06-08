@@ -35,6 +35,7 @@
 216 home/.local/share/wallpapers/EvilHackerMorty/metadata.json
 218 home/.config/ghostty/config
 225 home/.config/autostart/org.deskflow.deskflow.desktop
+240 home/.config/klassy/klassyrc
 240 home/.local/share/plasma/plasmoids/luisbocanegra.panel.colorizer/contents/ui/tools/list_presets.sh
 260 home/.config/kate/externaltools/Search%20KDE%20API.ini
 265 home/.config/kate/externaltools/git%20blame.ini
@@ -4405,6 +4406,7 @@
 106255 home/.local/share/plasma/look-and-feel/EvilMorty/contents/splash/images/Logo.png
 106325 home/.local/share/icons/YAMIS/apps/scalable/steam_icon_2478970.svg
 109944 home/.local/share/icons/YAMIS/apps/scalable/steam_icon_7000.svg
+114725 home/.config/klassy/windecopresetsrc
 170784 home/.icons/Apple-cursors/cursors/xterm
 834640 home/.icons/Apple-cursors/cursors/progress
 834640 home/.icons/Apple-cursors/cursors/wait

@@ -1,0 +1,14 @@
+[ButtonSizing]
+FullHeightButtonWidthMarginRight=14
+
+[Global]
+LookAndFeelSet=EvilMorty
+RefreshedConfig=6.5.3
+
+[TitleBarOpacity]
+ActiveTitleBarOpacity=99
+InactiveTitleBarOpacity=99
+
+[Windeco]
+ButtonIconStyle=StyleArk
+TitleAlignment=AlignLeft

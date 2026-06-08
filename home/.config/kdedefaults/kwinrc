@@ -5,5 +5,5 @@ LayoutName=big_icons
 NoPlugin=false
 ButtonsOnLeft=
 ButtonsOnRight=IAX
-library=org.kde.breeze
-theme=Breeze
+library=org.kde.klassy
+theme=Klassy

@@ -357,13 +357,13 @@ IconsStatic_dolphin.writeEntry('Places Icons Static Size', 16)
 const PlacesPanel = ConfigFile('dolphinrc')
 PlacesPanel.group = 'PlacesPanel'
 PlacesPanel.writeEntry('IconSize', 16)
-/*Breeze window decoration buttons*/
+/*Klassy window decoration buttons*/
 Buttons = ConfigFile("kwinrc")
 Buttons.group = "org.kde.kdecoration2"
 Buttons.writeEntry("ButtonsOnLeft", "")
 Buttons.writeEntry("ButtonsOnRight", "IAX")
-Buttons.writeEntry("library", "org.kde.breeze")
-Buttons.writeEntry("theme", "Breeze")
+Buttons.writeEntry("library", "org.kde.klassy")
+Buttons.writeEntry("theme", "Klassy")
 /******************************/
 /* accent color config*/
 ColorAccetFile = ConfigFile("kdeglobals")
