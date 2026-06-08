@@ -33,11 +33,8 @@ is restored, normalizes home paths, applies EvilMorty colors before window
 decorations, stages the wallpaper at `~/.local/share/wallpapers/EvilMorty.png`,
 then restarts Plasma automatically if it was running.
 
-Package installation expects an Arch-like system with `pacman`. It upgrades
-first with `sudo pacman -Syu --noconfirm`, installs Discord, Git, GitHub CLI,
-Code, Ghostty, Fastfetch, Conky, Deskflow, 7zip, Steam, Lutris, and detected
-Vulkan driver packages from the repositories, then installs `klassy` and Opera
-GX from AUR using an existing `paru` or `yay`.
+Package installation expects a Debian-based system with `apt`. It installs
+Discord, Opera GX, and the Klassy theme from the repositories.
 
 The bundled Global Theme package is also kept in sync with the restored setup:
 it uses YAMIS icons, Klassy window decorations, the EvilHackerMorty wallpaper

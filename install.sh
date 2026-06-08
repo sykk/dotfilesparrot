@@ -10,21 +10,8 @@ fi
 
 APP_PACKAGES=(
   discord
-  git
-  github-cli
-  code
-  ghostty
-  fastfetch
-  conky
-  deskflow
-  7zip
-  steam
-  lutris
-)
-
-AUR_PACKAGES=(
-  klassy
   opera-gx
+  klassy
 )
 
 log() {
@@ -49,91 +36,20 @@ require_command() {
   command -v "$1" >/dev/null 2>&1 || die "missing required command: $1"
 }
 
-vulkan_packages() {
-  local pci_info
-
-  if ! command -v lspci >/dev/null 2>&1; then
-    printf '%s\n' vulkan-swrast lib32-vulkan-swrast
-    return 0
-  fi
-
-  pci_info="$(lspci 2>/dev/null | tr '[:upper:]' '[:lower:]')"
-
-  if grep -Eq 'vga|3d|display' <<<"$pci_info" && grep -q 'nvidia' <<<"$pci_info"; then
-    printf '%s\n' nvidia-utils lib32-nvidia-utils
-  elif grep -Eq 'vga|3d|display' <<<"$pci_info" && grep -Eq 'amd|ati' <<<"$pci_info"; then
-    printf '%s\n' vulkan-radeon lib32-vulkan-radeon
-  elif grep -Eq 'vga|3d|display' <<<"$pci_info" && grep -q 'intel' <<<"$pci_info"; then
-    printf '%s\n' vulkan-intel lib32-vulkan-intel
-  else
-    printf '%s\n' vulkan-swrast lib32-vulkan-swrast
-  fi
-}
-
-aur_helper() {
-  if command -v paru >/dev/null 2>&1; then
-    printf 'paru\n'
-  elif command -v yay >/dev/null 2>&1; then
-    printf 'yay\n'
-  fi
-}
-
-install_aur_packages() {
-  local helper
-
-  [[ "${#AUR_PACKAGES[@]}" -gt 0 ]] || return 0
-
-  helper="$(aur_helper || true)"
-  [[ -n "$helper" ]] || die "AUR packages require paru or yay: ${AUR_PACKAGES[*]}"
-
-  log "Installing AUR packages with $helper: ${AUR_PACKAGES[*]}"
-  case "$helper" in
-    paru)
-      PAGER=cat "$helper" -S --needed --noconfirm --skipreview "${AUR_PACKAGES[@]}"
-      ;;
-    yay)
-      PAGER=cat "$helper" -S --needed --noconfirm --answerclean None --answerdiff None --answeredit None "${AUR_PACKAGES[@]}"
-      ;;
-  esac
-}
-
 install_packages() {
-  local packages=()
-
   if ! confirm "Install configured packages now?"; then
     log "Package installation skipped"
     return 0
   fi
 
   require_command sudo
-  require_command pacman
+  require_command apt
 
-  log "Upgrading system and repository packages"
-  sudo pacman -Syu --noconfirm
+  log "Updating package lists"
+  sudo apt update
 
-  mapfile -t packages < <(vulkan_packages)
-  packages+=("${APP_PACKAGES[@]}")
-
-  log "Installing packages with pacman: ${packages[*]}"
-  sudo pacman -S --needed --noconfirm "${packages[@]}"
-
-  install_aur_packages
-}
-
-enable_flathub_remote() {
-  if ! confirm "Enable Flathub Flatpak remote?"; then
-    return 0
-  fi
-
-  require_command flatpak
-
-  if flatpak remotes --columns=name | grep -qx flathub; then
-    log "Flathub is already enabled"
-    return 0
-  fi
-
-  log "Enabling Flathub"
-  flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+  log "Installing packages with apt: ${APP_PACKAGES[*]}"
+  sudo apt install -y "${APP_PACKAGES[@]}"
 }
 
 active_display_manager() {
@@ -448,7 +364,6 @@ main() {
   require_command rsync
 
   install_packages
-  enable_flathub_remote
   configure_autologin
 
   stop_plasma_shell_for_restore
