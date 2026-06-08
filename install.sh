@@ -29,13 +29,13 @@ Options:
       --no-pull        Do not pull updates before restoring
       --dry-run        Show what would be restored without changing $HOME
       --restart-plasma Restart Plasma after restoring dotfiles
-      --install-apps   Select and install apps with a terminal checklist
+      --install-apps   Prompt to install the configured app package set
       --install-aur-helper
                        Install an AUR helper when one is missing
       --enable-flathub Enable the Flathub Flatpak remote
       --enable-sddm-autologin
                        Configure SDDM autologin for this user
-      --setup          Run app selection plus optional system setup prompts
+      --setup          Run package install prompt plus optional system setup
       --restore-only   Only restore dotfiles and apply wallpaper
   -h, --help           Show this help
 
@@ -138,17 +138,17 @@ require_command git
 require_command rsync
 
 APP_PACKAGES=(
-  "discord|Discord|discord|ON"
-  "git|Git|git|ON"
-  "github-cli|GitHub CLI|github-cli|ON"
-  "opera-gx|Opera GX|opera-gx|ON"
-  "code|Code|code|ON"
-  "ghostty|Ghostty|ghostty|ON"
-  "fastfetch|Fastfetch|fastfetch|ON"
-  "conky|Conky|conky|ON"
-  "deskflow|Deskflow|deskflow|ON"
-  "steam|Steam|steam|ON"
-  "lutris|Lutris|lutris|ON"
+  discord
+  git
+  github-cli
+  opera-gx
+  code
+  ghostty
+  fastfetch
+  conky
+  deskflow
+  steam
+  lutris
 )
 
 confirm() {
@@ -200,44 +200,25 @@ install_paru_helper() {
   require_arch_like
   require_command sudo
 
-  if confirm "Install paru AUR helper now?"; then
-    log "Installing build dependencies"
-    sudo pacman -S --needed --noconfirm base-devel git
-    require_command makepkg
+  log "Installing paru AUR helper"
+  sudo pacman -S --needed --noconfirm base-devel git
+  require_command makepkg
 
-    local build_dir
-    build_dir="$(mktemp -d)"
-    log "Building paru-bin from AUR"
-    git clone https://aur.archlinux.org/paru-bin.git "$build_dir/paru-bin"
-    (cd "$build_dir/paru-bin" && makepkg -si --noconfirm)
-  else
-    die "AUR helper is required for app installation"
+  local build_dir
+  build_dir="$(mktemp -d)"
+  log "Building paru-bin from AUR"
+  git clone https://aur.archlinux.org/paru-bin.git "$build_dir/paru-bin"
+  (cd "$build_dir/paru-bin" && makepkg -si --noconfirm)
+}
+
+install_configured_apps() {
+  local helper
+
+  if ! confirm "Install configured packages now?"; then
+    log "Package installation skipped"
+    return 0
   fi
-}
 
-select_apps_with_gui() {
-  local choices=()
-  local item id name package default_state
-
-  require_command whiptail
-
-  for item in "${APP_PACKAGES[@]}"; do
-    IFS='|' read -r id name package default_state <<<"$item"
-    choices+=("$id" "$name ($package)" "$default_state")
-  done
-
-  whiptail --title "Application Selection" \
-    --checklist "Select apps to install with your AUR helper:" \
-    22 78 12 \
-    "${choices[@]}" \
-    3>&1 1>&2 2>&3
-}
-
-install_selected_apps() {
-  local selected helper packages=()
-  local item id name package default_state selected_id
-
-  [[ -t 0 ]] || die "--install-apps requires an interactive terminal"
   require_arch_like
 
   if ! helper="$(aur_helper)"; then
@@ -246,44 +227,8 @@ install_selected_apps() {
   fi
   [[ -n "$helper" ]] || die "could not find paru or yay after AUR helper setup"
 
-  selected="$(select_apps_with_gui)" || {
-    log "Application installation cancelled"
-    return 0
-  }
-
-  for selected_id in $selected; do
-    selected_id="${selected_id%\"}"
-    selected_id="${selected_id#\"}"
-    for item in "${APP_PACKAGES[@]}"; do
-      IFS='|' read -r id name package default_state <<<"$item"
-      if [[ "$id" == "$selected_id" ]]; then
-        packages+=("$package")
-      fi
-    done
-  done
-
-  if [[ "${#packages[@]}" -eq 0 ]]; then
-    log "No apps selected"
-    return 0
-  fi
-
-  log "Installing selected apps with $helper: ${packages[*]}"
-  aur_install "$helper" "${packages[@]}"
-}
-
-ensure_app_selector() {
-  if command -v whiptail >/dev/null 2>&1; then
-    return 0
-  fi
-
-  require_arch_like
-  require_command sudo
-
-  if confirm "Install whiptail for the app selection GUI?"; then
-    sudo pacman -S --needed --noconfirm libnewt
-  fi
-
-  require_command whiptail
+  log "Installing configured packages with $helper: ${APP_PACKAGES[*]}"
+  aur_install "$helper" "${APP_PACKAGES[@]}"
 }
 
 enable_flathub_remote() {
@@ -311,12 +256,6 @@ configure_sddm_autologin() {
   sudo mkdir -p /etc/sddm.conf.d
   printf '[Autologin]\nUser=%s\nSession=%s\n' "$user_name" "$session_name" |
     sudo tee "$config_path" >/dev/null
-}
-
-run_pre_app_setup_prompts() {
-  if confirm "Install or verify paru AUR helper?"; then
-    install_paru_helper
-  fi
 }
 
 run_post_app_setup() {
@@ -583,17 +522,12 @@ if [[ "$restore_only" -eq 1 ]]; then
   enable_sddm_autologin=0
 fi
 
-if [[ "$run_setup" -eq 1 ]]; then
-  run_pre_app_setup_prompts
-fi
-
 if [[ "$install_aur_helper" -eq 1 ]]; then
   install_paru_helper
 fi
 
 if [[ "$install_apps" -eq 1 ]]; then
-  ensure_app_selector
-  install_selected_apps
+  install_configured_apps
 fi
 
 if [[ "$run_setup" -eq 1 ]]; then

@@ -32,9 +32,9 @@ On CachyOS, `./install.sh` runs the guided one-command setup:
 ./install.sh --setup
 ```
 
-That checks optional system setup, opens the app selector, stops Plasma while
-desktop config is restored, normalizes home paths, applies the wallpaper, then
-restarts Plasma automatically if it was running. Use
+That checks optional system setup, prompts once to install the configured package
+set, stops Plasma while desktop config is restored, normalizes home paths,
+applies the wallpaper, then restarts Plasma automatically if it was running. Use
 `./install.sh --restore-only` to skip app/system setup and only restore the
 dotfiles.
 
@@ -64,9 +64,10 @@ Optional setup helpers:
 ./install.sh --restore-only
 ```
 
-`--install-apps` opens a terminal checklist for Discord, Git, GitHub CLI,
-Opera GX, Code, Ghostty, Fastfetch, Conky, Deskflow, Steam, and Lutris.
-App installation expects an Arch-like system with `pacman` and uses `paru` or `yay`. In
+`--install-apps` prompts once, then installs Discord, Git, GitHub CLI,
+Opera GX, Code, Ghostty, Fastfetch, Conky, Deskflow, Steam, and Lutris
+automatically. App installation expects an Arch-like system with `pacman` and
+uses `paru` or `yay`. In
 `--setup`, app and system setup runs before dotfiles are restored. The restored
 Plasma config remains the source of truth; the script applies EvilMorty colors
 before window decorations, then stages the wallpaper at
