@@ -1,5 +1,12 @@
 {
   "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/master/doc/json_schema.json",
+  "logo": {
+    "type": "file-raw",
+    "source": "/home/brandon/.config/fastfetch/logos/morty.txt",
+    "padding": {
+      "right": 2
+    }
+  },
   "modules": [
     "title",
     "separator",

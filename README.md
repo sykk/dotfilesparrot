@@ -42,7 +42,7 @@ The bundled Global Theme package is also kept in sync with the restored setup:
 it uses YAMIS icons, Klassy window decorations, the EvilHackerMorty wallpaper
 package, and the same dock launcher set as the saved Plasma config.
 
-If enabled, SDDM autologin writes `/etc/sddm.conf.d/10-autologin.conf` for the
+If enabled, SDDM autologin writes `/etc/sddm.conf.d/99-autologin.conf` for the
 current user. It defaults to `plasma.desktop`; override with
 `SDDM_AUTOLOGIN_SESSION=name.desktop` if needed. The script creates a
 timestamped backup directory before syncing files back to `$HOME`.

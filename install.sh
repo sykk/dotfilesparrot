@@ -142,11 +142,11 @@ configure_sddm_autologin() {
 
   user_name="${SUDO_USER:-$USER}"
   session_name="${SDDM_AUTOLOGIN_SESSION:-plasma.desktop}"
-  config_path="/etc/sddm.conf.d/10-autologin.conf"
+  config_path="/etc/sddm.conf.d/99-autologin.conf"
 
   log "Writing $config_path"
   sudo mkdir -p /etc/sddm.conf.d
-  printf '[Autologin]\nUser=%s\nSession=%s\n' "$user_name" "$session_name" |
+  printf '[Autologin]\nUser=%s\nSession=%s\nRelogin=true\n' "$user_name" "$session_name" |
     sudo tee "$config_path" >/dev/null
 }
 
@@ -223,6 +223,31 @@ normalize_home_paths() {
     [[ -f "$file" ]] || continue
     sed -i "s#/home/brandon#$HOME#g" "$file"
   done
+}
+
+apply_app_configs() {
+  local fastfetch_config="$HOME/.config/fastfetch/config.jsonc"
+  local fastfetch_logo="$HOME/.config/fastfetch/logos/morty.txt"
+  local ghostty_config="$HOME/.config/ghostty/config"
+  local ghostty_alt_config="$HOME/.config/ghostty/config.ghostty"
+  local ghostty_theme="$HOME/.config/ghostty/themes/EvilMorty"
+
+  if [[ -f "$fastfetch_config" && -f "$fastfetch_logo" ]]; then
+    log "Applying Fastfetch config"
+    sed -i "s#/home/brandon/.config/fastfetch/logos/morty.txt#$fastfetch_logo#g" "$fastfetch_config"
+    sed -i "s#$HOME/EvilMortyTheme/ascii.txt#$fastfetch_logo#g" "$fastfetch_config"
+  fi
+
+  if [[ -f "$ghostty_config" && -f "$ghostty_theme" ]]; then
+    log "Applying Ghostty config"
+    if grep -q '^theme *= *' "$ghostty_config"; then
+      sed -i 's/^theme *= *.*/theme = EvilMorty/' "$ghostty_config"
+    else
+      printf 'theme = EvilMorty\n\n' | cat - "$ghostty_config" >"$ghostty_config.tmp"
+      mv "$ghostty_config.tmp" "$ghostty_config"
+    fi
+    cp -f "$ghostty_config" "$ghostty_alt_config"
+  fi
 }
 
 apply_window_decoration_config() {
@@ -343,6 +368,7 @@ main() {
   restore_dotfiles "$dotfiles_dir"
 
   normalize_home_paths
+  apply_app_configs
   stage_wallpaper
   apply_evilmorty_colors
   write_wallpaper_config

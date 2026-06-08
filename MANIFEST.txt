@@ -1,4 +1,3 @@
-0 home/.config/ghostty/config.ghostty
 2 home/.config/Code - OSS/User/profiles/-4936a416/extensions.json
 2 home/.vscode-oss/extensions/extensions.json
 10 home/.config/kdedefaults/package
@@ -34,6 +33,7 @@
 200 home/.config/kate/externaltools/git-cola.ini
 216 home/.local/share/wallpapers/EvilHackerMorty/metadata.json
 218 home/.config/ghostty/config
+218 home/.config/ghostty/config.ghostty
 225 home/.config/autostart/org.deskflow.deskflow.desktop
 240 home/.config/klassy/klassyrc
 240 home/.local/share/plasma/plasmoids/luisbocanegra.panel.colorizer/contents/ui/tools/list_presets.sh
@@ -60,7 +60,6 @@
 304 home/.config/kate/externaltools/XML%20Format%20Full%20File.ini
 321 home/.config/kate/externaltools/Compile%20and%20Run%20cpp.ini
 334 home/.config/kate/externaltools/Clang%20Format%20Selected%20Text.ini
-347 home/.config/fastfetch/config.jsonc
 361 home/.local/share/plasma/plasmoids/luisbocanegra.panel.colorizer/contents/ui/configSupportMe.qml
 369 home/.local/share/plasma/plasmoids/org.kde.windowtitle.Fork/contents/config/config.qml
 373 home/.local/share/plasma/desktoptheme/EvilMorty.Transparent/metadata.json
@@ -194,6 +193,7 @@
 489 home/.local/share/icons/YAMIS/status/scalable/amd-bajo.svg
 489 home/.local/share/icons/YAMIS/status/scalable/amd-medio.svg
 492 home/.local/share/icons/YAMIS/status/scalable/state-information.svg
+493 home/.config/fastfetch/config.jsonc
 494 home/.local/share/icons/YAMIS/status/scalable/nitroshare-indicator.svg
 495 home/.local/share/icons/YAMIS/status/scalable/preferences-desktop-accessibility-panel.svg
 496 home/.local/share/icons/YAMIS/status/scalable/jdownloader-indicator.svg
