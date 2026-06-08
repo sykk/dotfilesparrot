@@ -20,78 +20,30 @@ This directory backs up the current desktop setup using home-relative paths unde
 
 ## Install
 
-From a checked-out repo:
+From a checked-out repo, run:
 
 ```sh
 ./install.sh
 ```
 
-On CachyOS, `./install.sh` runs the guided one-command setup:
+The installer has no options. It prompts once for the configured package set,
+optionally enables Flathub and SDDM autologin, stops Plasma while desktop config
+is restored, normalizes home paths, applies EvilMorty colors before window
+decorations, stages the wallpaper at `~/.local/share/wallpapers/EvilMorty.png`,
+then restarts Plasma automatically if it was running.
 
-```sh
-./install.sh --setup
-```
-
-That checks optional system setup, prompts once to install the configured package
-set, stops Plasma while desktop config is restored, normalizes home paths,
-applies the wallpaper, then restarts Plasma automatically if it was running. Use
-`./install.sh --restore-only` to skip app/system setup and only restore the
-dotfiles.
-
-From a fresh machine, first download this script or clone the repo, then pass
-the Git remote once the repo is published:
-
-```sh
-bash install.sh --repo https://github.com/USER/dotfiles.git
-```
-
-Or with a downloaded copy of the script:
-
-```sh
-DOTFILES_REPO_URL=https://github.com/USER/dotfiles.git bash install.sh
-```
-
-Use `./install.sh --dry-run` to preview restored files before changing `$HOME`.
-
-Optional setup helpers:
-
-```sh
-./install.sh --install-apps
-./install.sh --install-aur-helper
-./install.sh --enable-flathub
-./install.sh --enable-sddm-autologin
-./install.sh --setup
-./install.sh --restore-only
-```
-
-`--install-apps` prompts once, then installs Discord, Git, GitHub CLI,
-Opera GX, Code, Ghostty, Fastfetch, Conky, Deskflow, Steam, and Lutris
-automatically. App installation expects an Arch-like system with `pacman` and
-uses `paru` or `yay`. In
-`--setup`, app and system setup runs before dotfiles are restored. The restored
-Plasma config remains the source of truth; the script applies EvilMorty colors
-before window decorations, then stages the wallpaper at
-`~/.local/share/wallpapers/EvilMorty.png`.
-`--setup` also configures SDDM autologin for the current user.
+Package installation expects an Arch-like system with `pacman` and installs
+Discord, Git, GitHub CLI, Opera GX, Code, Ghostty, Fastfetch, Conky, Deskflow,
+Steam, and Lutris.
 
 The bundled Global Theme package is also kept in sync with the restored setup:
 it uses YAMIS icons, Breeze window decorations, the EvilHackerMorty wallpaper
 package, and the same dock launcher set as the saved Plasma config.
 
-`--enable-sddm-autologin` writes `/etc/sddm.conf.d/10-autologin.conf` for the
+If enabled, SDDM autologin writes `/etc/sddm.conf.d/10-autologin.conf` for the
 current user. It defaults to `plasma.desktop`; override with
-`SDDM_AUTOLOGIN_SESSION=name.desktop` if needed.
-
-## Restore
-
-From this directory:
-
-```sh
-./restore.sh
-```
-
-The script creates a timestamped backup directory before syncing files back to
-`$HOME`.
+`SDDM_AUTOLOGIN_SESSION=name.desktop` if needed. The script creates a
+timestamped backup directory before syncing files back to `$HOME`.
 
 ## Notes
 
