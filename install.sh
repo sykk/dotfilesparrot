@@ -17,6 +17,10 @@ APP_PACKAGES=(
   lutris
 )
 
+AUR_PACKAGES=(
+  klassy
+)
+
 log() {
   printf '==> %s\n' "$*"
 }
@@ -39,6 +43,33 @@ require_command() {
   command -v "$1" >/dev/null 2>&1 || die "missing required command: $1"
 }
 
+aur_helper() {
+  if command -v paru >/dev/null 2>&1; then
+    printf 'paru\n'
+  elif command -v yay >/dev/null 2>&1; then
+    printf 'yay\n'
+  fi
+}
+
+install_aur_packages() {
+  local helper
+
+  [[ "${#AUR_PACKAGES[@]}" -gt 0 ]] || return 0
+
+  helper="$(aur_helper || true)"
+  [[ -n "$helper" ]] || die "AUR packages require paru or yay: ${AUR_PACKAGES[*]}"
+
+  log "Installing AUR packages with $helper: ${AUR_PACKAGES[*]}"
+  case "$helper" in
+    paru)
+      PAGER=cat "$helper" -S --needed --noconfirm --skipreview "${AUR_PACKAGES[@]}"
+      ;;
+    yay)
+      PAGER=cat "$helper" -S --needed --noconfirm --answerclean None --answerdiff None --answeredit None "${AUR_PACKAGES[@]}"
+      ;;
+  esac
+}
+
 install_packages() {
   if ! confirm "Install configured packages now?"; then
     log "Package installation skipped"
@@ -48,8 +79,13 @@ install_packages() {
   require_command sudo
   require_command pacman
 
+  log "Upgrading system and repository packages"
+  sudo pacman -Syu --noconfirm
+
   log "Installing packages with pacman: ${APP_PACKAGES[*]}"
   sudo pacman -S --needed --noconfirm "${APP_PACKAGES[@]}"
+
+  install_aur_packages
 }
 
 enable_flathub_remote() {
