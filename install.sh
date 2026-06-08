@@ -136,16 +136,38 @@ enable_flathub_remote() {
   flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 }
 
-configure_sddm_autologin() {
-  local user_name session_name autologin_config override_config
+active_display_manager() {
+  local display_manager_link="/etc/systemd/system/display-manager.service"
+  local display_manager_target
 
-  if ! confirm "Enable SDDM autologin for this user?"; then
+  [[ -e "$display_manager_link" ]] || return 0
+  display_manager_target="$(readlink -f "$display_manager_link" 2>/dev/null || true)"
+  basename "$display_manager_target"
+}
+
+configure_autologin() {
+  local user_name session_name display_manager autologin_config override_config
+
+  if ! confirm "Enable autologin for this user?"; then
     return 0
   fi
 
   require_command sudo
 
   user_name="$USER"
+  display_manager="$(active_display_manager)"
+
+  if [[ "$display_manager" == "plasmalogin.service" || -f /etc/plasmalogin.conf || -x /usr/bin/plasmalogin ]]; then
+    session_name="${PLASMALOGIN_AUTOLOGIN_SESSION:-plasma.desktop}"
+
+    log "Writing Plasma Login autologin config"
+    printf '[Autologin]\nSession=%s\nUser=%s\n' "$session_name" "$user_name" | sudo tee /etc/plasmalogin.conf >/dev/null
+    if command -v systemctl >/dev/null 2>&1; then
+      sudo systemctl enable -f plasmalogin.service >/dev/null 2>&1 || true
+    fi
+    return 0
+  fi
+
   session_name="${SDDM_AUTOLOGIN_SESSION:-plasma}"
   autologin_config="/etc/sddm.conf.d/autologin.conf"
   override_config="/etc/sddm.conf.d/99-autologin.conf"
@@ -257,6 +279,18 @@ apply_app_configs() {
   fi
 }
 
+force_klassy_title_left() {
+  local config_file="$1"
+
+  [[ -f "$config_file" ]] || return 0
+
+  if grep -q '^TitleAlignment=' "$config_file"; then
+    sed -i 's/^TitleAlignment=.*/TitleAlignment=AlignLeft/' "$config_file"
+  else
+    printf '\n[Windeco]\nTitleAlignment=AlignLeft\n' >>"$config_file"
+  fi
+}
+
 apply_window_decoration_config() {
   local kwinrc="$HOME/.config/kwinrc"
   local klassyrc="$HOME/.config/klassy/klassyrc"
@@ -271,7 +305,6 @@ apply_window_decoration_config() {
     kwriteconfig6 --file "$kwinrc" --group org.kde.kdecoration2 --key theme Klassy
     if [[ -f "$klassyrc" ]]; then
       kwriteconfig6 --file "$klassyrc" --group Global --key LookAndFeelSet EvilMorty
-      kwriteconfig6 --file "$klassyrc" --group Windeco --key TitleAlignment AlignLeft
     fi
   else
     sed -i \
@@ -283,14 +316,17 @@ apply_window_decoration_config() {
   fi
 
   if [[ -f "$klassyrc" ]]; then
+    if command -v kwriteconfig6 >/dev/null 2>&1; then
+      kwriteconfig6 --file "$klassyrc" --group Windeco --key TitleAlignment AlignLeft
+    fi
     sed -i \
       -e 's/^LookAndFeelSet=.*/LookAndFeelSet=EvilMorty/' \
-      -e 's/^TitleAlignment=.*/TitleAlignment=AlignLeft/' \
       "$klassyrc"
+    force_klassy_title_left "$klassyrc"
   fi
 
   if [[ -f "$klassy_presets" ]]; then
-    sed -i 's/^TitleAlignment=.*/TitleAlignment=AlignLeft/' "$klassy_presets"
+    force_klassy_title_left "$klassy_presets"
   fi
 }
 
@@ -413,7 +449,7 @@ main() {
 
   install_packages
   enable_flathub_remote
-  configure_sddm_autologin
+  configure_autologin
 
   stop_plasma_shell_for_restore
   restore_dotfiles "$dotfiles_dir"
