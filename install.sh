@@ -7,7 +7,6 @@ APP_PACKAGES=(
   discord
   git
   github-cli
-  opera-gx
   code
   ghostty
   fastfetch
@@ -19,6 +18,7 @@ APP_PACKAGES=(
 
 AUR_PACKAGES=(
   klassy
+  opera-gx
 )
 
 log() {
