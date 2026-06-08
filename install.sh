@@ -134,18 +134,15 @@ enable_flathub_remote() {
 configure_sddm_autologin() {
   local user_name session_name config_path
 
-  if ! confirm "Enable SDDM autologin for this user?"; then
-    return 0
-  fi
-
   require_command sudo
 
   user_name="${SUDO_USER:-$USER}"
-  session_name="${SDDM_AUTOLOGIN_SESSION:-plasma.desktop}"
+  session_name="${SDDM_AUTOLOGIN_SESSION:-plasma}"
   config_path="/etc/sddm.conf.d/99-autologin.conf"
 
   log "Writing $config_path"
   sudo mkdir -p /etc/sddm.conf.d
+  sudo rm -f /etc/sddm.conf.d/10-autologin.conf /etc/sddm.conf.d/autologin.conf
   printf '[Autologin]\nUser=%s\nSession=%s\nRelogin=true\n' "$user_name" "$session_name" |
     sudo tee "$config_path" >/dev/null
 }
