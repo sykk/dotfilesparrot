@@ -10,8 +10,7 @@ fi
 
 APP_PACKAGES=(
   discord
-  opera-gx
-  klassy
+  opera-stable
 )
 
 log() {
@@ -44,12 +43,20 @@ install_packages() {
 
   require_command sudo
   require_command apt
+  require_command wget
+  require_command curl
+  require_command gpg
 
-  log "Updating package lists"
+  log "Downloading Discord .deb"
+  wget -qO /tmp/discord.deb "https://discord.com/api/download?platform=linux&format=deb"
+
+  log "Setting up Opera repository"
+  curl -fsSL https://deb.opera.com/archive.key | sudo gpg --dearmor -o /usr/share/keyrings/opera.gpg
+  echo "deb [signed-by=/usr/share/keyrings/opera.gpg] https://deb.opera.com/opera-stable/ stable non-free" | sudo tee /etc/apt/sources.list.d/opera.list >/dev/null
+
+  log "Installing packages"
   sudo apt update
-
-  log "Installing packages with apt: ${APP_PACKAGES[*]}"
-  sudo apt install -y "${APP_PACKAGES[@]}"
+  sudo apt install -y /tmp/discord.deb opera-stable
 }
 
 active_display_manager() {
@@ -195,84 +202,6 @@ apply_app_configs() {
   fi
 }
 
-force_klassy_title_left() {
-  local config_file="$1"
-
-  [[ -f "$config_file" ]] || return 0
-
-  if grep -q '^TitleAlignment=' "$config_file"; then
-    sed -i 's/^TitleAlignment=.*/TitleAlignment=AlignLeft/' "$config_file"
-  else
-    printf '\n[Windeco]\nTitleAlignment=AlignLeft\n' >>"$config_file"
-  fi
-}
-
-apply_window_decoration_config() {
-  local kwinrc="$HOME/.config/kwinrc"
-  local klassyrc="$HOME/.config/klassy/klassyrc"
-  local klassy_presets="$HOME/.config/klassy/windecopresetsrc"
-
-  [[ -f "$kwinrc" ]] || return 0
-
-  if command -v kwriteconfig6 >/dev/null 2>&1; then
-    kwriteconfig6 --file "$kwinrc" --group org.kde.kdecoration2 --key ButtonsOnLeft ""
-    kwriteconfig6 --file "$kwinrc" --group org.kde.kdecoration2 --key ButtonsOnRight IAX
-    kwriteconfig6 --file "$kwinrc" --group org.kde.kdecoration2 --key library org.kde.klassy
-    kwriteconfig6 --file "$kwinrc" --group org.kde.kdecoration2 --key theme Klassy
-    if [[ -f "$klassyrc" ]]; then
-      kwriteconfig6 --file "$klassyrc" --group Global --key LookAndFeelSet EvilMorty
-    fi
-  else
-    sed -i \
-      -e 's/^ButtonsOnLeft=.*/ButtonsOnLeft=/' \
-      -e 's/^ButtonsOnRight=.*/ButtonsOnRight=IAX/' \
-      -e 's/^library=.*/library=org.kde.klassy/' \
-      -e 's/^theme=.*/theme=Klassy/' \
-      "$kwinrc"
-  fi
-
-  if [[ -f "$klassyrc" ]]; then
-    if command -v kwriteconfig6 >/dev/null 2>&1; then
-      kwriteconfig6 --file "$klassyrc" --group Windeco --key TitleAlignment AlignLeft
-    fi
-    sed -i \
-      -e 's/^LookAndFeelSet=.*/LookAndFeelSet=EvilMorty/' \
-      "$klassyrc"
-    force_klassy_title_left "$klassyrc"
-  fi
-
-  if [[ -f "$klassy_presets" ]]; then
-    force_klassy_title_left "$klassy_presets"
-  fi
-}
-
-refresh_window_theme() {
-  local kdeglobals="$HOME/.config/kdeglobals"
-  local kwinrc="$HOME/.config/kwinrc"
-
-  if command -v kwriteconfig6 >/dev/null 2>&1; then
-    kwriteconfig6 --file "$kdeglobals" --group WM --key activeBackground "3,13,5"
-    kwriteconfig6 --file "$kdeglobals" --group WM --key activeForeground "142,229,101"
-    kwriteconfig6 --file "$kdeglobals" --group WM --key inactiveBackground "5,18,8"
-    kwriteconfig6 --file "$kdeglobals" --group WM --key inactiveForeground "93,145,70"
-    kwriteconfig6 --file "$kwinrc" --group org.kde.kdecoration2 --key library org.kde.breeze
-    kwriteconfig6 --file "$kwinrc" --group org.kde.kdecoration2 --key theme Breeze
-  fi
-
-  if command -v plasma-apply-colorscheme >/dev/null 2>&1; then
-    plasma-apply-colorscheme EvilMorty >/dev/null 2>&1 || true
-  fi
-
-  reconfigure_kwin
-
-  if command -v kwriteconfig6 >/dev/null 2>&1; then
-    kwriteconfig6 --file "$kwinrc" --group org.kde.kdecoration2 --key library org.kde.klassy
-    kwriteconfig6 --file "$kwinrc" --group org.kde.kdecoration2 --key theme Klassy
-  fi
-
-  reconfigure_kwin
-}
-
 write_wallpaper_config() {
   local wallpaper="$HOME/.local/share/wallpapers/EvilMorty.png"
   local plasma_config="$HOME/.config/plasma-org.kde.plasma.desktop-appletsrc"
@@ -345,14 +274,6 @@ wait_for_plasma_shell() {
   return 1
 }
 
-reconfigure_kwin() {
-  if command -v qdbus6 >/dev/null 2>&1; then
-    qdbus6 org.kde.KWin /KWin reconfigure >/dev/null 2>&1 || true
-  elif command -v dbus-send >/dev/null 2>&1; then
-    dbus-send --session --dest=org.kde.KWin /KWin org.kde.KWin.reconfigure >/dev/null 2>&1 || true
-  fi
-}
-
 main() {
   local dotfiles_dir
 
@@ -374,13 +295,10 @@ main() {
   stage_wallpaper
   apply_evilmorty_colors
   write_wallpaper_config
-  apply_window_decoration_config
-  refresh_window_theme
 
   if [[ "$plasma_was_running" -eq 1 ]]; then
     start_plasma_shell
     wait_for_plasma_shell || true
-    refresh_window_theme
     apply_wallpaper_live
   fi
 

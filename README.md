@@ -33,11 +33,12 @@ is restored, normalizes home paths, applies EvilMorty colors before window
 decorations, stages the wallpaper at `~/.local/share/wallpapers/EvilMorty.png`,
 then restarts Plasma automatically if it was running.
 
-Package installation expects a Debian-based system with `apt`. It installs
-Discord, Opera GX, and the Klassy theme from the repositories.
+Package installation expects a Debian-based system with `apt`. It downloads
+the Discord `.deb` directly, adds the official Opera repository, and installs
+both packages.
 
 The bundled Global Theme package is also kept in sync with the restored setup:
-it uses YAMIS icons, Klassy window decorations, the EvilHackerMorty wallpaper
+it uses YAMIS icons, the EvilHackerMorty wallpaper
 package, and the same dock launcher set as the saved Plasma config.
 
 SDDM autologin writes `/etc/sddm.conf.d/autologin.conf` and a matching
