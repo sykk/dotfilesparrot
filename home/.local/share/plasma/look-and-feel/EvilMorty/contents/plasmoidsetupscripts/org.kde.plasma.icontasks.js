@@ -8,12 +8,10 @@ function firstExisting(candidates) {
 }
 
 var launchers = [
-    firstExisting(["com.mitchellh.ghostty.desktop", "ghostty.desktop"]),
     firstExisting(["opera-gx.desktop", "com.opera.Opera.desktop", "opera.desktop"]),
     firstExisting(["discord.desktop", "com.discordapp.Discord.desktop", "vesktop.desktop"]),
     firstExisting(["org.kde.dolphin.desktop"]),
-    firstExisting(["systemsettings.desktop", "org.kde.systemsettings.desktop"]),
-    firstExisting(["code-oss.desktop", "code.desktop", "visual-studio-code.desktop"])
+    firstExisting(["systemsettings.desktop", "org.kde.systemsettings.desktop"])
 ].filter(function(launcher) {
     return launcher !== ""
 })

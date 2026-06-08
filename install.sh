@@ -10,7 +10,7 @@ fi
 
 APP_PACKAGES=(
   discord
-  opera-stable
+  opera-gx
 )
 
 log() {
@@ -56,7 +56,7 @@ install_packages() {
 
   log "Installing packages"
   sudo apt update
-  sudo apt install -y /tmp/discord.deb opera-stable
+  sudo apt install -y /tmp/discord.deb opera-gx
 }
 
 active_display_manager() {
