@@ -1,7 +1,7 @@
 0 home/.config/ghostty/config.ghostty
 2 home/.config/Code - OSS/User/profiles/-4936a416/extensions.json
 2 home/.vscode-oss/extensions/extensions.json
-20 home/.config/kdedefaults/package
+10 home/.config/kdedefaults/package
 21 home/.config/gtk-3.0/gtk.css
 21 home/.config/gtk-4.0/gtk.css
 26 home/.config/kate-externaltoolspluginrc
@@ -11,11 +11,12 @@
 36 home/.local/share/icons/YAMIS/changelog
 40 home/.config/kded6rc
 43 home/.config/kded5rc
-55 home/.config/kdedefaults/ksplashrc
+44 home/.config/kdedefaults/ksplashrc
 56 home/.zshrc
 57 home/.bash_profile
 57 home/.config/conky/backups/conkyrc.20260606-114546
 57 home/.conkyrc
+70 home/.config/breezerc
 75 home/.config/Deskflow/tls/trusted-servers
 81 home/.config/plasmarc
 83 home/.config/plasmanotifyrc
@@ -30,10 +31,8 @@
 182 home/.config/kate/externaltools/Insert%20UUID.ini
 182 home/.config/kate/externaltools/gitk.ini
 197 home/.local/share/plasma/desktoptheme/EvilMorty.Transparent/plasmarc
-197 home/EvilMortyTheme/desktoptheme/EvilMorty.Transparent/plasmarc
 200 home/.config/kate/externaltools/git-cola.ini
 216 home/.local/share/wallpapers/EvilHackerMorty/metadata.json
-216 home/EvilMortyTheme/wallpapers/EvilHackerMorty/metadata.json
 218 home/.config/ghostty/config
 225 home/.config/autostart/org.deskflow.deskflow.desktop
 240 home/.local/share/plasma/plasmoids/luisbocanegra.panel.colorizer/contents/ui/tools/list_presets.sh
@@ -60,10 +59,10 @@
 304 home/.config/kate/externaltools/XML%20Format%20Full%20File.ini
 321 home/.config/kate/externaltools/Compile%20and%20Run%20cpp.ini
 334 home/.config/kate/externaltools/Clang%20Format%20Selected%20Text.ini
+347 home/.config/fastfetch/config.jsonc
 361 home/.local/share/plasma/plasmoids/luisbocanegra.panel.colorizer/contents/ui/configSupportMe.qml
 369 home/.local/share/plasma/plasmoids/org.kde.windowtitle.Fork/contents/config/config.qml
 373 home/.local/share/plasma/desktoptheme/EvilMorty.Transparent/metadata.json
-373 home/EvilMortyTheme/desktoptheme/EvilMorty.Transparent/metadata.json
 386 home/.config/kate/externaltools/Run%20Shell%20Script.ini
 386 home/.local/share/icons/YAMIS/status/scalable/network-cellular-connected.svg
 388 home/.local/share/icons/YAMIS/status/scalable/gitter-indicator.svg
@@ -181,7 +180,6 @@
 475 home/.local/share/icons/YAMIS/status/scalable/prime-hybrid.svg
 475 home/.local/share/icons/YAMIS/status/scalable/printer-symbolic.svg
 481 home/.local/share/icons/YAMIS/status/scalable/twitch-indicator.svg
-484 home/.config/fastfetch/config.jsonc
 485 home/.local/share/icons/YAMIS/devices/scalable/drive-removable-media.svg
 485 home/.local/share/icons/YAMIS/devices/scalable/media-removable.svg
 485 home/.local/share/icons/YAMIS/status/scalable/drive-removable-media-symbolic.svg
@@ -1307,6 +1305,7 @@
 946 home/.local/share/icons/YAMIS/status/scalable/de.haeckerfelix.gradio-symbolic.svg
 946 home/.local/share/icons/YAMIS/status/scalable/fcitx-googlepinyin-panel.svg
 946 home/.local/share/icons/YAMIS/status/scalable/radiotray_connecting.svg
+947 home/.config/kitty/themes/EvilMorty.conf
 949 home/.local/share/icons/YAMIS/status/scalable/gpm-keyboard-100.svg
 949 home/.local/share/icons/YAMIS/status/scalable/keyboard-battery-full.svg
 949 home/.local/share/icons/YAMIS/status/scalable/xfpm-keyboard-100.svg
@@ -1364,7 +1363,6 @@
 974 home/.local/share/icons/YAMIS/status/scalable/indicator-keyboard-Ko.svg
 974 home/.local/share/icons/YAMIS/status/scalable/teams-tray-available.svg
 974 home/.local/share/icons/YAMIS/status/scalable/teams-tray-onshift.svg
-976 home/.config/kitty/themes/EvilMorty.conf
 976 home/.local/share/icons/YAMIS/status/scalable/ayatana-indicator-keyboard-Ka.svg
 976 home/.local/share/icons/YAMIS/status/scalable/indicator-keyboard-Ka-1.svg
 976 home/.local/share/icons/YAMIS/status/scalable/indicator-keyboard-Ka-2.svg
@@ -1635,7 +1633,6 @@
 1052 home/.local/share/icons/YAMIS/status/scalable/indicator-keyboard-Tg.svg
 1053 home/.local/share/icons/YAMIS/status/scalable/process-syncing-idle.svg
 1053 home/.local/share/plasma/look-and-feel/EvilMorty/contents/plasmoidsetupscripts/org.kde.plasma.icontasks.js
-1053 home/EvilMortyTheme/EvilMorty/contents/plasmoidsetupscripts/org.kde.plasma.icontasks.js
 1054 home/.local/share/icons/YAMIS/status/scalable/akonaditray.svg
 1054 home/.local/share/icons/YAMIS/status/scalable/superproductivity-tray-1.svg
 1054 home/.local/share/icons/YAMIS/status/scalable/superproductivity-tray-2.svg
@@ -2108,7 +2105,6 @@
 1408 home/.local/share/icons/YAMIS/actions/scalable/media-seek-forward.svg
 1409 home/.local/share/icons/YAMIS/actions/scalable/remove.svg
 1416 home/.local/share/icons/YAMIS/status/scalable/qomp-pause-panel.svg
-1422 home/EvilMortyTheme/ascii.txt
 1423 home/.local/share/icons/YAMIS/status/scalable/ayatana-indicator-keyboard-Sq.svg
 1423 home/.local/share/icons/YAMIS/status/scalable/indicator-keyboard-Sq.svg
 1425 home/.local/share/icons/YAMIS/status/scalable/ayatana-indicator-keyboard-Sa.svg
@@ -2274,7 +2270,6 @@
 1679 home/.local/share/icons/YAMIS/status/scalable/si-syncthing-5.svg
 1680 home/.local/share/icons/YAMIS/preferences/scalable/preferences-system-network-server-ftp.svg
 1680 home/.local/share/plasma/look-and-feel/EvilMorty/contents/splash/Splash.qml
-1680 home/EvilMortyTheme/EvilMorty/contents/splash/Splash.qml
 1683 home/.local/share/plasma/plasmoids/luisbocanegra.panel.colorizer/contents/ui/DBusPrimary.qml
 1684 home/.local/share/icons/YAMIS/status/scalable/si-syncthing-1.svg
 1684 home/.local/share/icons/YAMIS/status/scalable/si-syncthing-11.svg
@@ -2524,7 +2519,6 @@
 2065 home/.local/share/icons/YAMIS/apps/scalable/throne.svg
 2065 home/.local/share/plasma/plasmoids/AndromedaLauncher/contents/locale/fr/LC_MESSAGES/plasma_applet_AndromedaLauncher.mo
 2066 home/.local/share/plasma/look-and-feel/EvilMorty/metadata.json
-2066 home/EvilMortyTheme/EvilMorty/metadata.json
 2067 home/.local/share/icons/YAMIS/apps/scalable/wavebox.svg
 2071 home/.local/share/icons/YAMIS/apps/scalable/xiphos.svg
 2073 home/.local/share/icons/YAMIS/emblems/scalable/emblem-shared.svg
@@ -2614,10 +2608,6 @@
 2195 home/.local/share/plasma/desktoptheme/EvilMorty.Transparent/translucent/widgets/panel-background.svg
 2195 home/.local/share/plasma/desktoptheme/EvilMorty.Transparent/widgets/panel-background.svg
 2195 home/.local/share/plasma/plasmoids/AndromedaLauncher/contents/ui/icons/lucide/cpu.svg
-2195 home/EvilMortyTheme/desktoptheme/EvilMorty.Transparent/opaque/widgets/panel-background.svg
-2195 home/EvilMortyTheme/desktoptheme/EvilMorty.Transparent/solid/widgets/panel-background.svg
-2195 home/EvilMortyTheme/desktoptheme/EvilMorty.Transparent/translucent/widgets/panel-background.svg
-2195 home/EvilMortyTheme/desktoptheme/EvilMorty.Transparent/widgets/panel-background.svg
 2198 home/.local/share/icons/YAMIS/apps/scalable/texmaker.svg
 2199 home/.local/share/plasma/plasmoids/luisbocanegra.panel.colorizer/contents/ui/components/FormShadow.qml
 2200 home/.local/share/icons/YAMIS/preferences/scalable/plasma-search.svg
@@ -3143,13 +3133,9 @@
 3051 home/.local/share/icons/YAMIS/status/scalable/mullvad-tray-2.svg
 3054 home/.local/share/icons/YAMIS/apps/scalable/git.svg
 3054 home/.local/share/plasma/desktoptheme/EvilMorty.Transparent/colors
-3054 home/EvilMortyTheme/desktoptheme/EvilMorty.Transparent/colors
 3055 home/.local/share/color-schemes/EvilMorty.colors
 3055 home/.local/share/plasma/look-and-feel/EvilMorty/contents/color-schemes/EvilMorty.colors
 3055 home/.local/share/plasma/look-and-feel/EvilMorty/contents/colors/EvilMorty.colors
-3055 home/EvilMortyTheme/EvilMorty.colors
-3055 home/EvilMortyTheme/EvilMorty/contents/color-schemes/EvilMorty.colors
-3055 home/EvilMortyTheme/EvilMorty/contents/colors/EvilMorty.colors
 3058 home/.local/share/icons/YAMIS/mimetypes/scalable/application-x-lyx.svg
 3066 home/.local/share/icons/YAMIS/apps/scalable/kdiskmark.svg
 3071 home/.local/share/icons/YAMIS/apps/scalable/org.xfce.workspaces.svg
@@ -3483,7 +3469,6 @@
 3713 home/.local/share/icons/YAMIS/apps/scalable/time-admin.svg
 3714 home/.local/share/icons/YAMIS/categories/scalable/applications-education.svg
 3718 home/.local/share/plasma/look-and-feel/EvilMorty/contents/defaults
-3718 home/EvilMortyTheme/EvilMorty/contents/defaults
 3724 home/.local/share/icons/YAMIS/apps/scalable/multimedia-photo-viewer.svg
 3727 home/.local/share/icons/YAMIS/apps/scalable/timeshift.svg
 3730 home/.local/share/icons/YAMIS/status/scalable/mullvad-tray-5.svg
@@ -3899,7 +3884,6 @@
 5022 home/.local/share/icons/YAMIS/apps/scalable/equibop.svg
 5030 home/.local/share/icons/YAMIS/apps/scalable/bazaar.svg
 5034 home/.local/share/plasma/look-and-feel/EvilMorty/contents/splash/images/busywidget.svg
-5034 home/EvilMortyTheme/EvilMorty/contents/splash/images/busywidget.svg
 5035 home/.local/share/icons/YAMIS/mimetypes/scalable/text-dockerfile.svg
 5038 home/.local/share/icons/YAMIS/apps/scalable/org.gnome.font-viewer.svg
 5051 home/.local/share/icons/YAMIS/apps/scalable/qodana.svg
@@ -3994,7 +3978,6 @@
 5733 home/.local/share/icons/YAMIS/mimetypes/scalable-outlined/libreoffice-text.svg
 5741 home/.local/share/icons/YAMIS/apps/scalable/firefox.svg
 5746 home/.local/share/icons/YAMIS/apps/scalable/mkvtoolnix-gui.svg
-5763 home/EvilMortyTheme/plans.md
 5780 home/.local/share/icons/YAMIS/apps/scalable/display-im6.q16.svg
 5813 home/.local/share/plasma/plasmoids/luisbocanegra.panel.colorizer/contents/ui/components/FormShape.qml
 5866 home/.local/share/icons/YAMIS/devices/scalable/cpu.svg
@@ -4197,7 +4180,6 @@
 10665 home/.local/share/plasma/plasmoids/AndromedaLauncher/contents/ui/MainView.qml
 10704 home/.local/share/icons/YAMIS/apps/scalable/endeavouros.svg
 10826 home/.local/share/plasma/plasmoids/luisbocanegra.panel.colorizer/contents/locale/de/LC_MESSAGES/plasma_applet_luisbocanegra.panel.colorizer.mo
-10896 home/EvilMortyTheme/EvilMorty/contents/previews/splash.webp
 10916 home/.local/share/icons/YAMIS/apps/scalable/helio-workstation.svg
 10992 home/.local/share/icons/YAMIS/apps/scalable/ollama.svg
 10997 home/.local/share/icons/YAMIS/apps/scalable/signal-desktop.svg
@@ -4222,7 +4204,6 @@
 12124 home/.local/share/icons/YAMIS/apps/scalable/boxflat.svg
 12184 home/.local/share/icons/YAMIS/apps/scalable/itinerary.svg
 12305 home/.local/share/plasma/look-and-feel/EvilMorty/contents/layouts/org.kde.plasma.desktop-layout.js
-12305 home/EvilMortyTheme/EvilMorty/contents/layouts/org.kde.plasma.desktop-layout.js
 12382 home/.local/share/icons/YAMIS/apps/scalable/org.raspberrypi.rpi-imager.svg
 12462 home/.local/share/icons/YAMIS/apps/scalable/ktorrent.svg
 12463 home/.local/share/plasma/plasmoids/luisbocanegra.panel.colorizer/contents/ui/configGeneral.qml
@@ -4252,8 +4233,6 @@
 14320 home/.local/share/icons/YAMIS/apps/scalable/zellij.svg
 14348 home/.local/share/icons/YAMIS/apps/scalable/steam_icon_750920.svg
 14441 home/.local/share/icons/YAMIS/preferences/scalable/preferences-web-browser-cookies.svg
-14600 home/.local/share/plasma/desktoptheme/EvilMorty.Transparent/widgets/tasks.svg.bak-20260606-1158
-14600 home/EvilMortyTheme/desktoptheme/EvilMorty.Transparent/widgets/tasks.svg
 14678 home/.local/share/icons/YAMIS/apps/scalable/steam_icon_391220.svg
 14765 home/.local/share/plasma/plasmoids/luisbocanegra.panel.colorizer/contents/ui/configPresetAutoload.qml
 15253 home/.local/share/icons/YAMIS/apps/scalable/krecorder.svg
@@ -4423,21 +4402,10 @@
 62027 home/.local/share/icons/YAMIS/apps/scalable/kpat.svg
 63252 home/.local/share/plasma/plasmoids/luisbocanegra.panel.colorizer/translate/nl.po
 71761 home/.config/plasma-org.kde.plasma.desktop-appletsrc
-83902 home/EvilMortyTheme/ascii.png
 106255 home/.local/share/plasma/look-and-feel/EvilMorty/contents/splash/images/Logo.png
-106255 home/EvilMortyTheme/EvilMorty/contents/splash/images/Logo.png
 106325 home/.local/share/icons/YAMIS/apps/scalable/steam_icon_2478970.svg
 109944 home/.local/share/icons/YAMIS/apps/scalable/steam_icon_7000.svg
-144213 home/EvilMortyTheme/EvilMorty/contents/previews/preview.avif
 170784 home/.icons/Apple-cursors/cursors/xterm
-180714 home/EvilMortyTheme/terminal-minimal-test.png
-276625 home/EvilMortyTheme/terminal.png
 834640 home/.icons/Apple-cursors/cursors/progress
 834640 home/.icons/Apple-cursors/cursors/wait
-1286936 home/EvilMortyTheme/newconky.png
 1313845 home/.local/share/wallpapers/EvilHackerMorty/contents/images/EvilMorty.png
-1313845 home/Downloads/EvilMorty.png
-1313845 home/EvilMortyTheme/wallpapers/EvilHackerMorty/contents/images/EvilMorty.png
-2162907 home/EvilMortyTheme/current.png
-2335029 home/EvilMortyTheme/mockup.png
-2604811 home/EvilMortyTheme/toppanel.png

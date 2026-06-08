@@ -8,7 +8,7 @@ This directory backs up the current desktop setup using home-relative paths unde
 - KDE/Plasma config: panels, shell, KWin, KDE globals, notifications, defaults
 - Active Plasma assets: `EvilMorty`, `EvilMorty.Transparent`, and
   active local plasmoids
-- EvilMorty theme source and exported Code profile
+- Exported EvilMorty Code profile
 - Active color/icon/cursor themes: `EvilMorty.colors`, `YAMIS`,
   `Apple-cursors`
 - Bundled EvilHackerMorty wallpaper package
@@ -68,8 +68,9 @@ Optional setup helpers:
 Opera GX, Code, Ghostty, Fastfetch, Conky, Deskflow, Steam, and Lutris.
 App installation expects an Arch-like system with `pacman` and uses `paru` or `yay`. In
 `--setup`, app and system setup runs before dotfiles are restored. The restored
-Plasma config remains the source of truth; the script only reapplies the
-wallpaper afterward by copying it to `~/.local/share/wallpapers/EvilMorty.png`.
+Plasma config remains the source of truth; the script applies EvilMorty colors
+before window decorations, then stages the wallpaper at
+`~/.local/share/wallpapers/EvilMorty.png`.
 `--setup` also configures SDDM autologin for the current user.
 
 The bundled Global Theme package is also kept in sync with the restored setup:

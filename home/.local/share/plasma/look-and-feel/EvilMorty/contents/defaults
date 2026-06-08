@@ -19,8 +19,8 @@ LayoutName=org.kde.breeze.desktop
 Image=EvilHackerMorty
 
 [kwinrc][org.kde.kdecoration2]
-ButtonsOnLeft=IAX
-ButtonsOnRight=
+ButtonsOnLeft=
+ButtonsOnRight=IAX
 library=org.kde.breeze
 theme=Breeze
 

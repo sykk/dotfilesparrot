@@ -329,8 +329,7 @@ run_post_app_setup() {
 
 stage_wallpaper() {
   local wallpaper="$HOME/.local/share/wallpapers/EvilMorty.png"
-  local fallback_wallpaper="$HOME/Downloads/EvilMorty.png"
-  local source_wallpaper="$HOME/EvilMortyTheme/wallpapers/EvilHackerMorty/contents/images/EvilMorty.png"
+  local package_wallpaper="$HOME/.local/share/wallpapers/EvilHackerMorty/contents/images/EvilMorty.png"
 
   if [[ "${DOTFILES_SKIP_THEME_APPLY:-0}" -eq 1 ]]; then
     log "Skipping wallpaper staging"
@@ -339,10 +338,31 @@ stage_wallpaper() {
 
   mkdir -p "$HOME/.local/share/wallpapers"
 
-  if [[ -f "$source_wallpaper" ]]; then
-    cp -f "$source_wallpaper" "$wallpaper"
-  elif [[ ! -f "$wallpaper" && -f "$fallback_wallpaper" ]]; then
-    cp -f "$fallback_wallpaper" "$wallpaper"
+  if [[ -f "$package_wallpaper" ]]; then
+    cp -f "$package_wallpaper" "$wallpaper"
+  fi
+}
+
+apply_evilmorty_colors() {
+  local color_scheme="$HOME/.local/share/color-schemes/EvilMorty.colors"
+  local kdeglobals="$HOME/.config/kdeglobals"
+
+  if [[ "${DOTFILES_SKIP_THEME_APPLY:-0}" -eq 1 ]]; then
+    log "Skipping EvilMorty color apply"
+    return 0
+  fi
+
+  if [[ -f "$color_scheme" ]] && command -v plasma-apply-colorscheme >/dev/null 2>&1; then
+    log "Applying EvilMorty colors"
+    plasma-apply-colorscheme EvilMorty || log "Could not apply EvilMorty color scheme"
+  fi
+
+  if command -v kwriteconfig6 >/dev/null 2>&1; then
+    kwriteconfig6 --file "$kdeglobals" --group General --key ColorScheme EvilMorty
+    kwriteconfig6 --file "$kdeglobals" --group General --key Name EvilMorty
+    kwriteconfig6 --file "$kdeglobals" --group General --key AccentColor "0,255,102"
+    kwriteconfig6 --file "$kdeglobals" --group General --key LastUsedCustomAccentColor "0,255,102"
+    kwriteconfig6 --file "$kdeglobals" --group General --key accentColorFromWallpaper false
   fi
 }
 
@@ -389,14 +409,14 @@ apply_window_decoration_config() {
   [[ -f "$kwinrc" ]] || return 0
 
   if command -v kwriteconfig6 >/dev/null 2>&1; then
-    kwriteconfig6 --file "$kwinrc" --group org.kde.kdecoration2 --key ButtonsOnLeft IAX
-    kwriteconfig6 --file "$kwinrc" --group org.kde.kdecoration2 --key ButtonsOnRight ""
+    kwriteconfig6 --file "$kwinrc" --group org.kde.kdecoration2 --key ButtonsOnLeft ""
+    kwriteconfig6 --file "$kwinrc" --group org.kde.kdecoration2 --key ButtonsOnRight IAX
     kwriteconfig6 --file "$kwinrc" --group org.kde.kdecoration2 --key library org.kde.breeze
     kwriteconfig6 --file "$kwinrc" --group org.kde.kdecoration2 --key theme Breeze
   else
     sed -i \
-      -e 's/^ButtonsOnLeft=.*/ButtonsOnLeft=IAX/' \
-      -e 's/^ButtonsOnRight=.*/ButtonsOnRight=/' \
+      -e 's/^ButtonsOnLeft=.*/ButtonsOnLeft=/' \
+      -e 's/^ButtonsOnRight=.*/ButtonsOnRight=IAX/' \
       -e 's/^library=.*/library=org.kde.breeze/' \
       -e 's/^theme=.*/theme=Breeze/' \
       "$kwinrc"
@@ -594,6 +614,7 @@ stop_plasma_shell_for_restore
 
 normalize_home_paths
 stage_wallpaper
+apply_evilmorty_colors
 write_wallpaper_config
 apply_window_decoration_config
 

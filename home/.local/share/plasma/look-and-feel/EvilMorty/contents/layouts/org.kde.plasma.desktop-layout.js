@@ -360,8 +360,8 @@ PlacesPanel.writeEntry('IconSize', 16)
 /*Breeze window decoration buttons*/
 Buttons = ConfigFile("kwinrc")
 Buttons.group = "org.kde.kdecoration2"
-Buttons.writeEntry("ButtonsOnLeft", "IAX")
-Buttons.writeEntry("ButtonsOnRight", "")
+Buttons.writeEntry("ButtonsOnLeft", "")
+Buttons.writeEntry("ButtonsOnRight", "IAX")
 Buttons.writeEntry("library", "org.kde.breeze")
 Buttons.writeEntry("theme", "Breeze")
 /******************************/
