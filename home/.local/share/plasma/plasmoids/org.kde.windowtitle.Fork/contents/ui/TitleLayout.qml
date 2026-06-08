@@ -114,7 +114,8 @@ GridLayout{
 
         RowLayout {
             id: textRow
-            anchors.centerIn: parent
+            anchors.left: parent.left
+            anchors.verticalCenter: parent.verticalCenter
             spacing: 0
 
             width: plasmoid.formFactor === PlasmaCore.Types.Horizontal ? parent.width : parent.height
@@ -262,5 +263,4 @@ GridLayout{
         Layout.maximumHeight: Layout.minimumHeight
     }
 }
-
 
