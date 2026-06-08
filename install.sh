@@ -139,6 +139,10 @@ enable_flathub_remote() {
 configure_sddm_autologin() {
   local user_name session_name autologin_config override_config
 
+  if ! confirm "Enable SDDM autologin for this user?"; then
+    return 0
+  fi
+
   require_command sudo
 
   user_name="$USER"
@@ -256,6 +260,7 @@ apply_app_configs() {
 apply_window_decoration_config() {
   local kwinrc="$HOME/.config/kwinrc"
   local klassyrc="$HOME/.config/klassy/klassyrc"
+  local klassy_presets="$HOME/.config/klassy/windecopresetsrc"
 
   [[ -f "$kwinrc" ]] || return 0
 
@@ -276,20 +281,41 @@ apply_window_decoration_config() {
       -e 's/^theme=.*/theme=Klassy/' \
       "$kwinrc"
   fi
+
+  if [[ -f "$klassyrc" ]]; then
+    sed -i \
+      -e 's/^LookAndFeelSet=.*/LookAndFeelSet=EvilMorty/' \
+      -e 's/^TitleAlignment=.*/TitleAlignment=AlignLeft/' \
+      "$klassyrc"
+  fi
+
+  if [[ -f "$klassy_presets" ]]; then
+    sed -i 's/^TitleAlignment=.*/TitleAlignment=AlignLeft/' "$klassy_presets"
+  fi
 }
 
 refresh_window_theme() {
   local kdeglobals="$HOME/.config/kdeglobals"
+  local kwinrc="$HOME/.config/kwinrc"
 
   if command -v kwriteconfig6 >/dev/null 2>&1; then
     kwriteconfig6 --file "$kdeglobals" --group WM --key activeBackground "3,13,5"
     kwriteconfig6 --file "$kdeglobals" --group WM --key activeForeground "142,229,101"
     kwriteconfig6 --file "$kdeglobals" --group WM --key inactiveBackground "5,18,8"
     kwriteconfig6 --file "$kdeglobals" --group WM --key inactiveForeground "93,145,70"
+    kwriteconfig6 --file "$kwinrc" --group org.kde.kdecoration2 --key library org.kde.breeze
+    kwriteconfig6 --file "$kwinrc" --group org.kde.kdecoration2 --key theme Breeze
   fi
 
   if command -v plasma-apply-colorscheme >/dev/null 2>&1; then
     plasma-apply-colorscheme EvilMorty >/dev/null 2>&1 || true
+  fi
+
+  reconfigure_kwin
+
+  if command -v kwriteconfig6 >/dev/null 2>&1; then
+    kwriteconfig6 --file "$kwinrc" --group org.kde.kdecoration2 --key library org.kde.klassy
+    kwriteconfig6 --file "$kwinrc" --group org.kde.kdecoration2 --key theme Klassy
   fi
 
   reconfigure_kwin
